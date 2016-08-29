@@ -1,0 +1,41 @@
+<div class="row pd-top-2">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            丨&nbsp操作详情
+        </div>
+        <div class="panel-body">
+            <form role="form" class="form-inline ">
+                <div class="form-group col-md-12">
+                    <label class="control-label">用户名:</label>
+                    <p class="form-control-static">{{vm.param.managerName}}</p>
+                </div>
+                <div class="form-group col-md-12">
+
+                    <label class=" control-label">角色:</label>
+                    <p class="form-control-static">{{vm.param.roleName}}</p>
+
+                </div>
+                <div class="form-group col-md-12">
+
+                    <label class=" control-label">时间:</label>
+                    <p class="form-control-static">{{vm.param.operateAt}}</p>
+
+                </div>
+                <div class="form-group col-md-12">
+
+                    <label class=" control-label">操作记录:</label>
+                    <p class="form-control-static">{{vm.param.moduleName}}</p>
+
+                </div>
+                <div class="form-group pd-top-2 ">
+                    <div class="col-md-7 ">
+                        <button class="btn btn-default btn-sm " ng-click="vm.cancel()">返回</button>
+                    </div>
+                    <div class="col-md-4">
+                        <button class="btn btn-danger btn-sm" ng-click="vm.del()">删除</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

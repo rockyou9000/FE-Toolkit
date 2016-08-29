@@ -1,0 +1,46 @@
+
+<div class="form-group">
+    <label  class="col-md-2 control-label">听力内容</label>
+    <div class="col-md-9">
+        <textarea ng-disabled="vm.editable" class="form-control" rows="4" cols="12" ng-model="vm.showData.test.content" name="content" required></textarea>
+        <div class="error" ng-messages="ngForm.content.$error" ng-if="ngForm.content.$touched">
+            <div ng-message="required">听力内容不能为空</div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label  class="col-md-2 control-label">问题</label>
+    <div class="col-md-9">
+        <input ng-disabled="vm.editable" type="text" class="form-control" name="question" ng-model="vm.showData.test.question" required>
+        <div class="error" ng-messages="ngForm.question.$error" ng-if="ngForm.question.$touched">
+            <div ng-message="required">问题不能为空</div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label  class="col-md-2 control-label">问题翻译</label>
+    <div class="col-md-9">
+        <input ng-disabled="vm.editable" type="text" class="form-control" name="translation" ng-model="vm.showData.test.translation"required>
+        <div class="error" ng-messages="ngForm.translation.$error" ng-if="ngForm.translation.$touched">
+            <div ng-message="required">翻译不能为空</div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-md-2 control-label">时长</label>
+    <div class="col-md-9">
+        <select ng-disabled="vm.editable" class="form-control" name="grade" ng-model="vm.showData.test.duration">
+            <option value="3">3s</option>
+            <option value="4">4s</option>
+            <option value="5">5s</option>
+            <option value="6">6s</option>
+            <option value="7">7s</option>
+            <option value="8">8s</option>
+            <option value="9">9s</option>
+            <option value="10">10s</option>
+            <option value="11">11s</option>
+            <option value="12">12s</option>
+        </select>
+    </div>
+</div>
+

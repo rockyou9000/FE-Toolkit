@@ -1,0 +1,1 @@
+<link href="<?php echo get_theme_url('css/index.css').'?='.date('Y-m-d'); ?>" type="text/css" rel="stylesheet" />

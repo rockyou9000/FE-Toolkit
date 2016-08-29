@@ -1,0 +1,159 @@
+<div class="row pd-top-2">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            课程管理
+        </div>
+        <div class="panel-body" style="border:1px solid #858585; margin: 2%;">
+            <form role="form" class="form-horizontal" name="ngForm" novalidate>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">课程名称</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" ng-disabled="noedit" name="name"
+                               ng-model="vm.params.name" required>
+                    </div>
+                    <div class="error" ng-messages="ngForm.name.$error" ng-if="ngForm.name.$touched">
+                        <div ng-message="required">课程名不能为空</div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">课程图片</label>
+                    <img style="width:100px;margin-left: 1.6%;" ng-src="{{vm.params.image | imgFilter}}" alt="">
+                    <div class="col-sm-10 col-sm-offset-2">
+                        <label class="btn  btn-default" for="file" ng-if="!noedit">上传图片</label>
+                        <input id="file" style="display: none" type="file" nv-file-select uploader="vm.uploader"
+                               accept=".jpg,.png,.jpeg,.gif"/>
+                        <table class="table text-center" ng-show="vm.uploader.queue.length">
+                            <thead>
+                            <tr>
+                                <th class="text-center" width="50%">文件名</th>
+                                <th class="text-center" ng-show="vm.uploader.isHTML5">大小</th>
+                                <th class="text-center" ng-show="vm.uploader.isHTML5">进度</th>
+                                <th class="text-center">状态</th>
+                                <th class="text-center">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="item in vm.uploader.queue" class="ng-scope" ng-if="$first">
+                                <td><strong class="ng-binding">{{item.file.name}}</strong></td>
+                                <td ng-show="vm.uploader.isHTML5" nowrap="" class="ng-binding">{{
+                                    item.file.size/1024/1024 |
+                                    number:2 }} MB
+                                </td>
+                                <td ng-show="vm.uploader.isHTML5">
+                                    <div class="progress" style="margin-bottom: 0;">
+                                        <div class="progress-bar" role="progressbar"
+                                             ng-style="{ 'width': item.progress + '%' }"></div>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                    <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                    <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                </td>
+                                <td nowrap="">
+                                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()"
+                                            ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                        <span class="glyphicon glyphicon-upload"></span> 上传
+                                    </button>
+                                    <a class="btn btn-primary btn-xs" href="{{vm.data.url[$index]}}" target="_blank"
+                                       ng-if="vm.data.url[$index] != undefined">
+                                        <span class="fa fa-arrow-circle-down"></span> 下载
+                                    </a>
+                                    <button type="button" class="btn btn-danger btn-xs"
+                                            ng-click="item.remove(); vm.clearImg()">
+                                        <span class="glyphicon glyphicon-trash"></span> 删除
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-2 control-label">教师</label>
+                    <div class="col-md-6">
+                        <select ng-model="vm.params.teacherid" name="teacher" class="form-control" ng-disabled="noedit"
+                                required>
+                            <option value="">请选择教师</option>
+                            <option ng-repeat="item in vm.teacherparams" ng-selected="vm.params.teacherid == item.id"
+                                    value="{{item.id}}">{{item.name}}
+                            </option>
+                        </select>
+                        <div class="error" ng-messages="ngForm.teacher.$error" ng-if="ngForm.teacher.$touched">
+                            <div ng-message="required">教师不能为空</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">年级</label>
+                    <div class="col-md-6">
+
+                        <select class="form-control" name="grade" ng-disabled="noedit" ng-model="vm.params.grade"
+                                ng-change="vm.selectGrade(vm.params.grade)" required>
+                            <option value="">请选择年级</option>
+                            <option value="1">一年级</option>
+                            <option value="2">二年级</option>
+                            <option value="3">三年级</option>
+                            <option value="4">四年级</option>
+                            <option value="5">五年级</option>
+                            <option value="6">六年级</option>
+                        </select>
+                        <div class="error" ng-messages="ngForm.grade.$error" ng-if="ngForm.grade.$touched">
+                            <div ng-message="required">年级不能为空</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">教材名称</label>
+                    <div class="col-md-6">
+                        <select ng-model="vm.params.bookid" name="bookid" ng-disabled="noedit" class="form-control"
+                                required>
+                            <option value="">请选择教材</option>
+                            <option ng-repeat="item in vm.bookparams" ng-selected="vm.params.bookid == item.id"
+                                    value="{{item.id}}">{{item.name}}
+                            </option>
+                        </select>
+                        <div class="error" ng-messages="ngForm.bookid.$error" ng-if="ngForm.bookid.$touched">
+                            <div ng-message="required">教材不能为空</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="intro" class="col-md-2 control-label">简介</label>
+                    <div class="col-md-6">
+                    <textarea  id="intro" name='introduction' cols="30" rows="3" class="form-control"
+                              ng-disabled="noedit" ng-maxlength="127" ng-model="vm.params.introduction"></textarea>
+                    </div>
+                    <div class="error" ng-messages="ngForm.introduction.$error" ng-if="ngForm.introduction.$touched">
+                        <div ng-message="maxlength">简介长度不能超过127个字</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-2">
+                        <!--<button class="btn btn-success btn-sm" ng-click="vm.update()" ui-sref="field.courseList">保存</button>-->
+                        <button class="btn btn-success btn-sm" ng-if="vm.status==2" ng-click="vm.update()"
+                                ng-disabled="ngForm.$invalid">保存
+                        </button>
+                        <button class="btn btn-success btn-sm" ng-if="vm.status==1&&globalPermission.updated" ng-click="vm.edit()">编辑</button>
+                        <button class="btn btn-success btn-sm" ng-if="vm.status==3" ng-click="vm.add()"
+                                ng-disabled="ngForm.$invalid">新增
+                        </button>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-default btn-sm" ng-if="vm.status==2||vm.status==3"
+                                ui-sref="field.courseList({status:1})">取消
+                        </button>
+                        <button class="btn btn-default btn-sm" ng-if="vm.status==1"
+                                ui-sref="field.courseList({status:1})">返回
+                        </button>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

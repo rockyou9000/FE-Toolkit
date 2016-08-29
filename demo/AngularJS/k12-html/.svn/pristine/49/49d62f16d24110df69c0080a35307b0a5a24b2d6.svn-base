@@ -1,0 +1,83 @@
+
+<div class="form-group">
+    <label class="col-sm-2 control-label">单元图</label>
+    <img style="width:100px;margin-left: 1.6%;" ng-src="{{vm.showData.test.img | imgFilter}}" >
+    <div class="col-sm-10 col-sm-offset-2">
+        <label ng-if="!vm.editable" class="btn btn-default" for="file">上传文件</label>
+        <input ng-disabled="vm.editable" id="file" style="display: none" type="file" nv-file-select uploader="vm.uploader" accept=".jpg,.png,.jpeg,.gif"/>
+        <table class="table text-center" ng-show="vm.uploader.queue.length">
+            <thead>
+            <tr>
+                <th class="text-center" width="50%">文件名</th>
+                <th class="text-center" ng-show="vm.uploader.isHTML5">大小</th>
+                <th class="text-center"  ng-show="vm.uploader.isHTML5">进度</th>
+                <th class="text-center" >状态</th>
+                <th class="text-center" >操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in vm.uploader.queue" class="ng-scope" ng-if="$first">
+                <td><strong class="ng-binding">{{item.file.name}}</strong></td>
+                <td ng-show="vm.uploader.isHTML5" nowrap="" class="ng-binding">{{ item.file.size/1024/1024 | number:2 }} MB</td>
+                <td ng-show="vm.uploader.isHTML5">
+                    <div class="progress" style="margin-bottom: 0;">
+                        <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                    </div>
+                </td>
+                <td class="text-center">
+                    <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                    <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                    <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                </td>
+                <td nowrap="">
+                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                        <span class="glyphicon glyphicon-upload"></span> 上传
+                    </button>
+                    <a class="btn btn-primary btn-xs" href="{{vm.data.url[$index]}}" target="_blank" ng-if="vm.data.url[$index] != undefined">
+                        <span class="fa fa-arrow-circle-down"></span> 下载
+                    </a>
+                    <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove(); vm.clearImg()">
+                        <span class="glyphicon glyphicon-trash"></span> 删除
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="form-group">
+    <label  class="col-md-2 control-label" >短语</label>
+    <div class="col-md-9">
+        <input ng-disabled="vm.editable" type="text" class="form-control"  ng-model="vm.showData.test.content" name="content" required>
+        <div class="error" ng-messages="ngForm.content.$error" ng-if="ngForm.content.$touched">
+            <div ng-message="required">短语不能为空</div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label  class="col-md-2 control-label" >翻译</label>
+    <div class="col-md-9">
+        <input ng-disabled="vm.editable" type="text" class="form-control" ng-model="vm.showData.test.translation" name="translation"required>
+        <div class="error" ng-messages="ngForm.translation.$error" ng-if="ngForm.translation.$touched">
+            <div ng-message="required">翻译不能为空</div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label  class="col-md-2 control-label" ng-model="vm.params.duration">时长</label>
+    <div class="col-md-9">
+        <select ng-disabled="vm.editable" class="form-control"  ng-model="vm.showData.test.duration" >
+            <option value="3">3s</option>
+            <option value="4">4s</option>
+            <option value="5">5s</option>
+            <option value="6">6s</option>
+            <option value="7">7s</option>
+            <option value="8">8s</option>
+            <option value="9">9s</option>
+            <option value="10">10s</option>
+            <option value="11">11s</option>
+            <option value="12">12s</option>
+        </select>
+    </div>
+</div>
+

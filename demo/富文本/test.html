@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>editor</title>
+	<link rel="stylesheet" type="text/css" href="./css/wangEditor.css">	
+</head>
+<body>
+<div class="wrap" style="width:1200px;height:900px">
+	<div id="div1">
+    	<p>请输入内容...</p>
+	</div>
+</div>
+	
+
+
+<!--这里引用jquery和wangEditor.js-->
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script type="text/javascript" src="./js/wangEditor.js"></script>
+<script type="text/javascript">
+    var editor = new wangEditor('div1');
+    editor.config.uploadImgUrl = 'http://devcallcenter.lqxshop.com/chat_upload/do_chat_action&app_page=null&action_type=&app_fmt=json';
+    editor.create();
+</script>
+</body>
+</html>

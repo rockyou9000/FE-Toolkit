@@ -1,0 +1,448 @@
+
+'use strict';
+
+angular.module('admin').controller('testDetailController', ['$rootScope', '$state', '$window','$cookies', 'testService', 'bookService', 'unitService', 'coursewareService', 'FileUploader', 'uploadService', testDetailController]);
+
+function testDetailController($rootScope, $state,$window,$cookies, testService, bookService, unitService, coursewareService, FileUploader, uploadService) {
+    var vm = this;
+    vm.params = {};
+
+    // 获取ID
+    vm.id = $state.params.id;
+    // 有父级ID时无法编辑下拉框
+    vm.wid = $state.params.wid;
+    // 是否可编辑状态
+    vm.editable = !($state.params.status * 1);
+    vm.parentEditable = !!vm.pid;
+    // 传入的status
+    vm.status = $state.params.status;
+    // 不可编辑时点击转变为可编辑状态
+    vm.edit=function(){
+        vm.status = 1;
+        vm.editable = !(vm.status*1);
+    };
+    vm.unEdit = function() {
+        vm.status = 0;
+        vm.editable = !(vm.status*1);
+    };
+
+    // 判断测试类型，赋值给vm.type
+    var routeStatus = $state.current.name;
+    switch (routeStatus) {
+        case "field.testDetail.word":
+            vm.type = "0";
+            break;
+        case "field.testDetail.phrase":
+            vm.type = "1";
+            break;
+        case "field.testDetail.sentence":
+            vm.type = "2";
+            break;
+        case "field.testDetail.dialogue":
+            vm.type = "3";
+            break;
+        case "field.testDetail.text":
+            vm.type = "4";
+            break;
+        case "field.testDetail.picture":
+            vm.type = "5";
+            break;
+        case "field.testDetail.answers":
+            vm.type = "6";
+            break;
+        default:
+            alert("不是已知的任何类型测验：" + n);
+    }
+
+    // 更改测试类型
+    vm.change = function () {
+        switch (vm.type) {
+            case "0":
+                $state.go("field.testDetail.word");
+                break;
+            case "1":
+                $state.go("field.testDetail.phrase");
+                break;
+            case "2":
+                $state.go("field.testDetail.sentence");
+                break;
+            case "3":
+                $state.go("field.testDetail.dialogue");
+                break;
+            case "4":
+                $state.go("field.testDetail.text");
+                break;
+            case "5":
+                $state.go("field.testDetail.picture");
+                break;
+            case "6":
+                $state.go("field.testDetail.answers");
+                break;
+            default:
+                alert("不是已知的任何类型测验：" + n);
+        }
+        trasformData.setShowFromNul(vm.widData);
+    };
+
+    // 上传组件
+    FileUploader.FileSelect.prototype.isEmptyAfterSelection = function () {
+        return true;
+    };
+
+    vm.uploader = uploadService.uploadFile(FileUploader);
+    vm.uploader.onSuccessItem = function (fileItem, response, status) {
+        if (status == 200) {
+            vm.showData.test.img = response.data.url;
+        }
+    };
+    vm.uploaderA = uploadService.uploadFile(FileUploader);
+    vm.uploaderA.onSuccessItem = function (fileItem, response, status) {
+        if (status == 200) {
+            vm.showData.test.optionA = response.data.url;
+        }
+    };
+    vm.uploaderB = uploadService.uploadFile(FileUploader);
+    vm.uploaderB.onSuccessItem = function (fileItem, response, status) {
+        if (status == 200) {
+            vm.showData.test.optionB = response.data.url;
+        }
+    };
+    vm.uploaderC = uploadService.uploadFile(FileUploader);
+    vm.uploaderC.onSuccessItem = function (fileItem, response, status) {
+        if (status == 200) {
+            vm.showData.test.optionC = response.data.url;
+        }
+    };
+    vm.uploaderD = uploadService.uploadFile(FileUploader);
+    vm.uploaderD.onSuccessItem = function (fileItem, response, status) {
+        if (status == 200) {
+            vm.showData.test.optionD = response.data.url;
+        }
+    };
+
+
+    // 转换数据
+    var trasformData = {
+        // 构造页面展示数据
+        setShowFromNul: function(data) {
+            // 大类id
+            vm.bigType = 0;
+            if (vm.type == 0 || vm.type == 1 || vm.type == 2 || vm.type == 3) {
+                vm.bigType = 1;
+            } else if (vm.type == 4 || vm.type == 5) {
+                vm.bigType = 2;
+            } else {
+                vm.bigType = 3;
+            }
+            if (!vm.showData) {
+                vm.showData = {quiz: {}};
+            }
+            vm.showData.quiz = {
+                type: vm.bigType,
+                status: 1,
+                duration: 10,
+                grade: data.book.grade,
+                bid: data.book.id,
+                uid: data.unit.id,
+                wid: data.ware.id,
+                bname: data.book.name,
+                uname: data.unit.name,
+                wname: data.ware.title
+            };
+            if (vm.type == 0 || vm.type == 1 || vm.type == 2) {
+                vm.showData.test = {
+                    content: "",
+                    translation: "",
+                    phonetic: "",
+                    img: "",
+                    duration: 10
+                }
+            } else if (vm.type == 3) {
+                vm.showData.test = {
+                    contentA: '',
+                    contentB: '',
+                    translationA: '',
+                    translationB: '',
+                    durationA: 10,
+                    durationB: 10
+                };
+            } else if (vm.type == 4 || vm.type == 5) {
+                vm.showData.test = {
+                    content: '',
+                    translation: '',
+                    question: '',
+                    optionA: '',
+                    optionB: '',
+                    optionC: '',
+                    optionD: '',
+                    answer: '',
+                    duration: 10
+                }
+            } else {
+                vm.showData.test = {
+                    content: "",
+                    translation: "",
+                    question: "",
+                    duration: 10
+                }
+            }
+
+            // 单独设置不同类型下的默认时长
+            if (vm.type == 0) {
+                vm.showData.test.duration = 3;
+            } else if (vm.type == 1) {
+                vm.showData.test.duration = 4;
+            } else if (vm.type == 4) {
+                vm.showData.test.duration = 7;
+            } else if (vm.type == 5) {
+                vm.showData.test.duration = 5;
+            }
+        },
+        setShowFromAPI: function(data) {
+            vm.showData = {
+                quiz: {
+                    id: data.quiz.id,
+                    targetID: data.quiz.targetID,
+                    type: data.quiz.type,
+                    status: data.quiz.status,
+                    duration: data.quiz.duration,
+                    grade: data.book.grade,
+                    bid: data.book.id,
+                    uid: data.unit.id,
+                    wid: data.ware.id,
+                    bname: data.book.name,
+                    uname: data.unit.name,
+                    wname: data.ware.name
+                }
+            };
+
+
+            // 细分类型
+            // 细分跟读-对话
+            if (data.quiz.type == 1 && vm.type == 3) {
+                vm.showData.test = {
+                    contentA: data.repeat.content.split('||')[0],
+                    contentB: data.repeat.content.split('||')[1],
+                    translationA: data.repeat.translation.split('||')[0],
+                    translationB: data.repeat.translation.split('||')[1],
+                    durationA: data.quiz.duration.split('||')[0],
+                    durationB: data.quiz.duration.split('||')[1]
+                };
+            } else if (data.quiz.type == 1 && vm.type != 3) {
+                vm.showData.test = data.repeat;
+                vm.showData.test.duration = data.quiz.duration;
+            }
+            // 细分选择-
+            if (data.quiz.type == 2) {
+                vm.showData.test = {
+                    content: data.choice.content,
+                    translation: data.choice.translation,
+                    question: data.choice.question,
+                    optionA: data.choice.option.split('||')[0],
+                    optionB: data.choice.option.split('||')[1],
+                    optionC: data.choice.option.split('||')[2],
+                    optionD: data.choice.option.split('||')[3],
+                    answer: data.choice.answer,
+                    duration: data.quiz.duration
+                };
+            }
+            // 细分开放式问答
+            if (data.quiz.type == 3) {
+                vm.showData.test = data.openq;
+                vm.showData.test.duration = data.quiz.duration;
+            }
+
+
+
+        },
+        setSubmit: function() {
+            // 基本参数
+            vm.submitData = {
+                quiz: {
+                    type: vm.bigType || vm.showData.quiz.type * 1,
+                    wid: vm.showData.quiz.wid * 1,
+                    status: vm.showData.quiz.status * 1,
+                    instruction: "",
+                    duration: vm.showData.test.duration * 1
+                }
+            };
+            // 新增无targetID，修改有targetID
+            if (vm.id) {
+                vm.submitData.quiz.id = vm.showData.quiz.id;
+                vm.submitData.quiz.targetID = vm.showData.quiz.targetID;
+            }
+
+            // 不同题型下的参数
+            if (vm.type == 0 || vm.type == 1 || vm.type == 2) {
+                vm.submitData.repeat = {
+                    content: vm.showData.test.content,
+                    translation: vm.showData.test.translation,
+                    phonetic: vm.showData.test.phonetic,
+                    img: vm.showData.test.img
+                };
+            } else if (vm.type == 3) {
+                vm.submitData.repeat = {
+                    content: vm.showData.test.contentA + '||' + vm.showData.test.contentB,
+                    translation: vm.showData.test.translationA + '||' + vm.showData.test.translationB,
+                    phonetic: '',
+                    img: ''
+                };
+                vm.submitData.quiz.duration = vm.showData.test.durationA + '||' + vm.showData.test.durationB;
+            }
+            if (vm.type == 4 || vm.type == 5) {
+                vm.submitData.choice = {
+                    content: vm.showData.test.content,
+                    translation: vm.showData.test.translation,
+                    question: vm.showData.test.question,
+                    option: vm.showData.test.optionA +
+                        '||' + vm.showData.test.optionB +
+                        '||' + vm.showData.test.optionC +
+                        '||' + vm.showData.test.optionD,
+                    answer: vm.showData.test.answer
+                };
+            }
+            if (vm.type == 6) {
+                vm.submitData.openq = vm.showData.test;
+            }
+
+            // 不同题型中的type构造
+            if (vm.type == 0) {
+                vm.submitData.repeat.type = 1;
+            } else if (vm.type == 1) {
+                vm.submitData.repeat.type = 2;
+            } else if (vm.type == 2) {
+                vm.submitData.repeat.type = 3;
+            } else if (vm.type == 3) {
+                vm.submitData.repeat.type = 4;
+            } else if (vm.type == 4) {
+                vm.submitData.choice.type = 1;
+            } else if (vm.type == 5) {
+                vm.submitData.choice.type = 2;
+            }
+        }
+    };
+
+    // 基本信息
+    if (vm.id) {
+        testService.get(vm.id).then(function (res) {
+            if (res.data.code === 0) {
+                trasformData.setShowFromAPI(res.data.data);
+            } else {
+                $rootScope.alert(res.data.message);
+            }
+        });
+    } else if (vm.wid) {
+        coursewareService.get(vm.wid).then(function (res) {
+            if (res.data.code === 0) {
+                vm.widData = res.data.data;
+                trasformData.setShowFromNul(res.data.data);
+            } else {
+                $rootScope.alert(res.data.message);
+            }
+        });
+    }
+
+    // 新增
+    vm.add = function () {
+        trasformData.setSubmit();
+        //判断新增和保存
+        if( vm.id ){
+            testService.update(vm.id, vm.submitData).then(function (res) {
+                if (res.data.code === 0) {
+                    $rootScope.alert("更新信息成功", function() {
+                        //$state.go("field.testList",{wid:vm.wid});
+                        $window.history.back();
+                    });
+                } else {
+                    $rootScope.alert(res.data.message);
+                }
+            });
+        } else {
+            testService.add(vm.submitData).then(function (res) {
+                if (res.data.code === 0) {
+                    $rootScope.alert("增加信息成功", function() {
+                        //vm.unEdit();
+                        $state.go("field.testList",{wid:vm.wid});
+                    });
+                } else {
+                    $rootScope.alert(res.data.message);
+                }
+            });
+        }
+
+    };
+
+    // 取消
+    vm.cancel = function () {
+        //$window.history.back();
+        $state.go("field.testList", {wid: vm.wid});
+    };
+
+    // 删除
+    vm.del = function () {
+        testService.del(vm.id).then(function (res) {
+            if (res.data.code === 0) {
+                $rootScope.alert("已成功删除", $state.go("field.testList"));
+            } else {
+                $rootScope.alert(res.data.message);
+            }
+        });
+    };
+
+    vm.clearImg = function() {
+        vm.showData.test.img = "";
+    };
+
+    // 选择年级后连动教材
+    vm.selectGrade = function () {
+        var params = {
+            grade: vm.params.grade,
+            status: 1,
+            size: 99
+        };
+        bookService.getList(params).then(function (res) {
+            if (res.data.code === 0) {
+                vm.bookList = res.data.data;
+            } else {
+                $rootScope.alert("获取教材列表失败：" + res.data.message);
+            }
+        });
+    };
+    // 选择教材后连动单元
+    vm.selectBook = function () {
+        var params = {
+            grade: vm.params.grade,
+            bid: vm.params.bid,
+            status: 1,
+            size: 99
+        };
+        unitService.getList(params).then(function (res) {
+            if (res.data.code === 0) {
+                vm.unitList = res.data.data.list;
+            } else {
+                $rootScope.alert("获取单元列表失败：" + res.data.message);
+            }
+        });
+    };
+    // 选择单元后连动课件
+    vm.selectCourse = function () {
+        var params = {
+            grade: vm.params.grade,
+            bid: vm.params.bid,
+            uid: vm.params.uid,
+            status: 1,
+            size: 99
+        };
+        coursewareService.getList(params).then(function (res) {
+            if (res.data.code === 0) {
+                vm.coursewareList = res.data.data.list;
+            } else {
+                $rootScope.alert("获取课件列表失败：" + res.data.message);
+            }
+        });
+    };
+
+
+
+
+}

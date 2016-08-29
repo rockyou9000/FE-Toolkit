@@ -1,0 +1,76 @@
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" ng-show="title">
+                <button type="button" class="close" ng-click="$hide()">&times;</button>
+                <h4 class="modal-title" ng-bind-html="title"></h4>
+            </div>
+            <!--<p>日期：{{selectedItem.data}}</p>-->
+            <div class="modal-body">
+                <form class="form-horizontal" role="form" name="ngForm" novalidate>
+                    <div class="form-group">
+                        <label class="control-label col-md-2" >日期</label>
+                        <label class="control-label col-md-10 " style="text-align: left">{{selectedItem.date}}</label>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-2">课件</label>
+                        <div class="col-md-10" style="overflow: hidden; height: 312px">
+                            <ul class="ul-table">
+                                <li ng-repeat="item in cwareListRange()" style="list-style-type: none">
+                                    <div class="text-center lessonlist" ng-class="{selected: params.wid == item.id}" ng-click="cwareSelect(item)">
+                                        <p><span class="ellipsis">{{item.grade}}年级</span> <span>{{item.uname}}</span></p>
+                                        <p class="ellipsis"><span >{{item.title}}</span></p>
+                                    </div>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-4 col-md-offset-5">
+                            <button class="btn btn-sm" ng-click="cwarePage.showPrev()" ng-disabled="cwarePage.prevDisabled">上一页</button>
+                            <button class="btn btn-sm" ng-click="cwarePage.showNext()" ng-disabled="cwarePage.nextDisabled">下一页</button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">课程</label>
+                        <div class="col-md-9">
+                        <select class="form-control" name="lesson" ng-model="params.cid" ng-change="selectAction(params.cid)" required>
+                            <option value="">请选择课程</option>
+                            <option ng-repeat="item in courseList" value="{{item.id}}">{{item.name}}</option>
+                        </select>
+                            <div class="error" ng-messages="ngForm.lesson.$error" ng-if="ngForm.lesson.$touched">
+                                <div ng-message="required">课程不能为空</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-2">时间</label>
+                        <div class="col-md-3">
+                            <input type="text" name="time" class="form-control" size="2" ng-model="lessonstart" data-time-type="date"
+                                   placement="top" length="4" bs-timepicker required>
+                        </div>
+                        <label class="control-label col-md-1">至</label>
+                        <div class="col-md-3">
+                            <input type="text" name="time" class="form-control" size="2" ng-model="lessonend" data-time-type="date"
+                                   placement="top" length="4" bs-timepicker required>
+                        </div>
+                        <div class="error" ng-messages="ngForm.time.$error" ng-if="ngForm.time.$touched">
+                            <div ng-message="required">排课时间不能为空</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <button type="button" class="btn btn-primary" ng-if="Permission.updated || Permission.created" ng-click="submitLesson(lessonstart, lessonend)" ng-disabled="ngForm.$invalid">确认</button>
+                    <button type="button" class="btn btn-default" ng-click="$hide()">取消</button>
+                    <button type="button" class="btn btn-danger" ng-if="params.id && Permission.deleted" ng-click="del()">删除</button>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
+    </div>
+</div>

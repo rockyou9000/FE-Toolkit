@@ -1,0 +1,16 @@
+#后台
+server {
+	listen       80;
+	server_name  local.admin.k12.ptteng.com;
+	location / {
+		root   /Users/chill/ptteng/k12;
+		index  index.html index.htm;
+	}
+	location /ajax/{
+		 proxy_pass   http://115.29.203.53:10326;
+	 proxy_set_header		Host				$host;
+	 proxy_set_header		X-Real-IP			$remote_addr;
+	proxy_set_header		X-Forwarded-For		$proxy_add_x_forwarded_for;
+	}
+
+}

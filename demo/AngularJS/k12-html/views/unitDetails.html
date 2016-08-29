@@ -1,0 +1,103 @@
+<div class="row pd-top-2">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            单元管理
+        </div>
+        <div class="panel-body" style="border:1px solid #858585; margin: 2%;">
+            <form role="form" class="form-horizontal" name="ngForm" novalidate>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">年级</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" disabled ng-model="vm.params.grade">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">教材名称</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" disabled ng-model="vm.params.bname">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">单元图</label>
+                    <img style="width:100px; margin-left:1.6%;" ng-src="{{vm.params.img | imgFilter}}">
+                    <div class="col-sm-10 col-sm-offset-2">
+                        <label class="btn btn-default" ng-if="!vm.noedit" for="file">上传文件</label>
+                        <input id="file" style="display: none" type="file" ng-if="!vm.noedit" nv-file-select uploader="vm.uploader"
+                               accept=".jpg,.png,.jpeg,.gif"/>
+                        <table class="table text-center" ng-show="vm.uploader.queue.length">
+                            <thead>
+                            <tr>
+                                <th class="text-center" width="50%">文件名</th>
+                                <th class="text-center" ng-show="vm.uploader.isHTML5">大小</th>
+                                <th class="text-center" ng-show="vm.uploader.isHTML5">进度</th>
+                                <th class="text-center">状态</th>
+                                <th class="text-center">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="item in vm.uploader.queue" class="ng-scope" ng-if="$first">
+                                <td><strong class="ng-binding">{{item.file.name}}</strong></td>
+                                <td ng-show="vm.uploader.isHTML5" nowrap="" class="ng-binding">{{
+                                    item.file.size/1024/1024 | number:2 }} MB
+                                </td>
+                                <td ng-show="vm.uploader.isHTML5">
+                                    <div class="progress" style="margin-bottom: 0;">
+                                        <div class="progress-bar" role="progressbar"
+                                             ng-style="{ 'width': item.progress + '%' }"></div>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                    <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                    <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                </td>
+                                <td nowrap="">
+                                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()"
+                                            ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                        <span class="glyphicon glyphicon-upload"></span> 上传
+                                    </button>
+                                    <a class="btn btn-primary btn-xs" href="{{vm.data.url[$index]}}" target="_blank"
+                                       ng-if="vm.data.url[$index] != undefined">
+                                        <span class="fa fa-arrow-circle-down"></span> 下载
+                                    </a>
+                                    <button type="button" class="btn btn-danger btn-xs"
+                                            ng-click="item.remove(); vm.clearImg()">
+                                        <span class="glyphicon glyphicon-trash"></span> 删除
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">单元名称</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" name="name" ng-disabled="vm.noedit" ng-model="vm.params.uname" required>
+                    </div>
+                    <div class="error" ng-messages="ngForm.name.$error" ng-if="ngForm.name.$touched">
+                        <div ng-message="required">单元名不能为空</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-2">
+                        <button class="btn btn-success btn-sm" ng-if="vm.status==2" ng-click="vm.update()" ng-disabled="ngForm.$invalid">保存</button>
+                        <button class="btn btn-success btn-sm" ng-if="vm.status==1&&globalPermission.updated" ng-click="vm.edit()">编辑</button>
+                        <button class="btn btn-success btn-sm" ng-if="vm.status==3" ng-click="vm.add()" ng-disabled="ngForm.$invalid">新增</button>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-default btn-sm" ng-if="vm.status==2||vm.status==3"
+                                ng-click="vm.cancel()">取消
+                        </button>
+                        <button class="btn btn-default btn-sm" ng-if="vm.status==1" ng-click="vm.cancel()">返回</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

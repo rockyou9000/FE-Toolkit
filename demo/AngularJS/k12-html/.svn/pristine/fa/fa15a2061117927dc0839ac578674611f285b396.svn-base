@@ -1,0 +1,94 @@
+<div class="row pd-top-2">
+    <div class=" col-md-12 pd-top-2 pd-bottom-2  panel panel-default">
+        <form class="form-inline  form-search" role="form">
+            <div class="form-group col-md-4  col-md-offset-1">
+                <label>年级</label>
+                <select class="form-control" ng-model="vm.params.grade">
+                    <option value="">全部</option>
+                    <option value="1">一年级</option>
+                    <option value="2">二年级</option>
+                    <option value="3">三年级</option>
+                    <option value="4">四年级</option>
+                    <option value="5">五年级</option>
+                    <option value="6">六年级</option>
+                </select>
+            </div>
+            <div class="form-group col-md-5 col-md-offset-1">
+                <label>教材名称</label>
+                <input type="text" class="form-control" ng-model="vm.params.bname">
+            </div>
+            <div class="form-group col-md-5 col-sm-offset-1 col-sm-5 col-md-offset-1">
+                <label>单元名称</label>
+                <input type="text" class="form-control" ng-model="vm.params.name">
+            </div>
+            <div class="form-group col-md-5 col-sm-offset-4 col-sm-2 col-md-offset-1">
+                <button class="btn btn-primary pull-right" ng-click="vm.search()">查询</button>
+                <button class="btn btn-primary pull-right" ng-if="vm.hasParent" ng-click="vm.research()" style="margin-right:2%;">重置</button>
+            </div>
+
+
+        </form>
+    </div>
+
+    <div class="row">
+        <div class=" col-md-12 ">
+            <div class="  panel panel-default">
+                <div class="panel-heading">
+                    单元管理
+                    <div class="btn-group pull-right" ng-if="vm.hasParent">
+                        <div class="btn btn-primary btn-xs" ng-if="globalPermission.created"
+                             ui-sref="field.unitDetails({bid:vm.params.bid})">
+                            <i class="fa fa-plus-square fa-fw"></i>
+                            新增
+                        </div>
+                    </div>
+                    <div class="btn-group pull-right" ng-if="vm.hasParent" style="margin-right: 2%;">
+                        <div class="btn btn-primary btn-xs" ng-if="globalPermission.sorted" ng-click="vm.sort()">
+                            保存排序
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <ul class="ul-table-head">
+                        <li>
+                            <div class="four1">序号</div>
+                            <div class="four2">图片</div>
+                            <div class="four3">单元名称</div>
+                            <div class="four4">操作</div>
+                        </li>
+                    </ul>
+                    <ul class="ul-table" dnd-list="vm.list">
+                        <li ng-repeat="item in vm.list"
+                            dnd-draggable="item"
+                            dnd-moved="vm.list.splice($index, 1)"
+                            dnd-effect-allowed="move"
+                            dnd-selected="vm.list.selected = item"
+                            ng-class="{'selected': vm.list.selected === item}"
+                        >
+
+                            <div class="four1">{{$index*1+1}}</div>
+                            <div class="four2"><img ng-if="item.img" src="http://rc.fastschool.cn{{item.img}}" alt=""/>
+                            </div>
+                            <div class="four3">{{item.name}}</div>
+                            <div class="four4">
+                                <button class="btn btn-default btn-xs"
+                                        ui-sref="field.coursewareList({uid:item.id,status:1})" ng-if="!vm.nextLevelBtn" ui-sref-opts="{reload: true}">课件管理
+                                </button>
+                                <button class="btn btn-default btn-xs" ui-sref="field.unitDetails({id:item.id,statusa:1, bid:vm.params.bid})">查看
+                                </button>
+                                <button class="btn btn-default btn-xs" ng-if="globalPermission.updated" ui-sref="field.unitDetails({id:item.id,statusa:0, bid:vm.params.bid})">编辑
+                                </button>
+                                <button class="btn btn-danger btn-xs" ng-if="globalPermission.deleted" data-toggle="modal" data-target="#myModal"
+                                        ng-click="vm.del(item.id, $index)">删除
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<paging ng-if="vm.page" next="{{vm.page}}"></paging>

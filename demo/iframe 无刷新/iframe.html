@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>debug</title>
+    <meta charset="UTF-8">
+    <style type="text/css">
+    .log table {
+        border : 1px #ccc solid;
+    }
+    .log th {
+        font-family : verdana, arial, sans-serif;
+        font-weight : bold;
+        font-size : 8pt;
+    }
+    .log tr th {
+        background-color : #ddd;
+        border-bottom : 1px #ccc solid;
+        padding-left : 2px;
+        padding-right : 2px;
+        text-align : left;
+    }
+    .log .head-num {
+        border-right : 1px #ccc solid;
+        text-align: center;
+    }
+    .log td {
+        font-family : courier new,monospace;
+        font-size : 9pt;
+        background-color : #ffe;
+    }
+    .log td :hover{
+        background-color : #c2d7b2;
+    }
+    .log .num {
+        width : 1%;
+        background-color : #eee !important;
+        border-right : 1px #ccc solid;
+        padding-left : 2px;
+        padding-right : 2px;
+    }
+    .log .line {
+        padding-left : 10px;
+    }
+    .hilite {
+        color : #900;
+    }
+    .hilite-marker {
+        background-color : #ff0;
+        color : #000;
+        font-weight : bold;
+    }
+    </style>
+</head>
+<body marginwidth="0" marginheight="0">
+	<div class="log">
+		<table cellpadding="1" cellspacing="0" border="0" width="100%">
+			<tbody>
+				<tr>
+				    <th width="1%" class="head-num">行</th>
+				    <th width="99%">数据</th>
+				</tr>
+				<tr>
+				    <td width="1%" nowrap="" class="num">
+					    3421<br>
+					    3422<br>
+				    </td>
+				    <td width="99%" class="line">       
+				        <nobr><span class="hilite"><span class="date" title="2016.06.03 10:16:43">2016.06.03 10:16:43</span> org.jivesoftware.openfire.http.HttpSession - It's still open - calling close()</span>
+				        </nobr>
+				        <br>  
+				        <nobr><span class="hilite"><span class="date" title="2016.06.03 10:16:43">2016.06.03 10:16:43</span> org.jivesoftware.openfire.http.HttpBindServlet - Data can be written to [101.226.125.108]</span>
+				        </nobr>
+				        <br>
+				    </td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

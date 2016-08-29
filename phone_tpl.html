@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>phone</title>
+	<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="./reset.css">
+    <style type="text/css">
+    	/* rem 一般配置 */
+    	html{font-size:10px;font-family: '微软雅黑','黑体',Helvetica;}
+    	@media screen and (min-width:321px) and (max-width:375px){html{font-size:11px}}
+		@media screen and (min-width:376px) and (max-width:414px){html{font-size:12px}}
+		@media screen and (min-width:415px) and (max-width:639px){html{font-size:15px}}
+		@media screen and (min-width:640px) and (max-width:719px){html{font-size:20px}}
+		@media screen and (min-width:720px) and (max-width:749px){html{font-size:22.5px}}
+		@media screen and (min-width:750px) and (max-width:799px){html{font-size:23.5px}}
+		@media screen and (min-width:800px){html{font-size:25px}} 
+
+    	a,button,input,textarea{-webkit-tap-highlight-color: rgba(0,0,0,0;)}  /*去掉ios系统中元素被触摸时产生的半透明灰色遮罩*/
+    	input,button{-webkit-appearance:none} 	/* webkit表单元素的默认外观重置 */
+
+    	input::-webkit-input-placeholder{color:#AAAAAA;}  /* webkit表单输入框placeholder的颜色值 */
+		input:focus::-webkit-input-placeholder{color:#EEEEEE;}
+		
+		.css{-webkit-touch-callout: none}  /* 禁止ios 长按时不触发系统的菜单，禁止ios&android长按时下载图片 */
+		.css{-webkit-user-select:none}  /* 禁止ios和android用户选中文字 */
+
+
+		/* 直接在body上添加ontouchstart，同样可激活移动端css的active效果 */
+		/* .css:active{background-color: #357AE8;} */
+
+
+		/* //竖屏时使用的样式
+		@media all and (orientation:portrait) {
+		.css{}
+		}
+		
+		//横屏时使用的样式
+		@media all and (orientation:landscape) {
+		.css{}
+		} */
+
+		body{-webkit-text-size-adjust: 100%!important;}   /* ios使用-webkit-text-size-adjust禁止调整字体大小 */
+		input::-webkit-input-speech-button {display: none}  /* android 上去掉语音输入按钮 */
+    </style>
+</head>
+<body ontouchstart>
+	<h1></h1>
+
+	<!-- <a href="tel:0755-10086">打电话给:0755-10086</a>
+	<a href="sms:10086">发短信给: 10086</a>
+	<a href="mailto:peun@foxmail.com">peun@foxmail.com</a> -->
+
+	<!-- <input autocapitalize="off" autocorrect="off" />  取消input在ios下，输入的时候英文首字母的默认大写 -->
+
+</body>
+<script>
+	(function(){	
+		var width = document.documentElement.clientWidth;
+		var height = document.documentElement.clientHeight;
+	}())
+</script>
+</html>

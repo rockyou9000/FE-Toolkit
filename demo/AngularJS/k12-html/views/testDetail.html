@@ -1,0 +1,73 @@
+<div class="row pd-top-2">
+    <div class="panel panel-default">
+        <div class="panel-heading" ng-if="vm.editable">
+            新增测验
+        </div>
+        <div class="panel-heading" ng-if="!vm.editable">
+            编辑测验
+        </div>
+        <div class="panel-body" style="border:1px solid #858585; margin: 2%;">
+            <form role="form" class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-md-2 control-label">年级</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" disabled ng-model="vm.showData.quiz.grade">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">教材名称</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" disabled ng-model="vm.showData.quiz.bname">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">单元名称</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" disabled ng-model="vm.showData.quiz.uname">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">课件名称</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control" disabled ng-model="vm.showData.quiz.wname">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">测试类型</label>
+                    <div class="col-md-9">
+                        <select class="form-control" ng-disabled="vm.editable||vm.parentEditable||vm.id" ng-change="vm.change()"
+                                ng-model="vm.type">
+                            <option value="0">跟读-单词</option>
+                            <option value="1">跟读-短语</option>
+                            <option value="2">跟读-句子</option>
+                            <option value="3">跟读-对话</option>
+                            <option value="4">选择-文本</option>
+                            <option value="5">选择-图片</option>
+                            <option value="6">开放式问答</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+        <div class="panel-body" style="border:1px solid #858585; margin: 2%;">
+            <form role="form" class="form-horizontal"  name="ngForm" novalidate>
+            <ui-view></ui-view>
+
+            <div class="form-group">
+                <div class="col-md-2"></div>
+                <div class="col-md-2">
+                    <button class="btn btn-success btn-sm" ng-if="vm.id && vm.status == 1" ng-click="vm.add()" ng-disabled="ngForm.$invalid">保存</button>
+                    <button class="btn btn-success btn-sm" ng-if="vm.status == 0&&globalPermission.updated" ng-click="vm.edit()">编辑</button>
+                    <button class="btn btn-success btn-sm" ng-if="!vm.id&&globalPermission.created" ng-click="vm.add()" ng-disabled="ngForm.$invalid">新增</button>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-default btn-sm" ng-if="vm.status == 1" ng-click="vm.cancel()">取消</button>
+                    <button class="btn btn-default btn-sm" ng-if="vm.status == 0" ng-click="vm.cancel()">返回</button>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

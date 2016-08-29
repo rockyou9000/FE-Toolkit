@@ -1,0 +1,181 @@
+<div class="row pd-top-2">
+<div class="panel panel-default">
+    <div class="panel-heading">
+        外教信息
+    </div>
+    <div style="margin: 2%" class="add-table-border">
+        <div class="panel-body" >
+        <form class="form-horizontal" name="ngForm" novalidate>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">头像</label>
+                <img style="width:100px;margin-left: 1.6%;" ng-src="{{vm.params.img | imgFilter}}" alt="">
+                <div class="col-sm-10 col-sm-offset-2" >
+                    <label class="btn btn-default" for="file" ng-if="vm.status != 2">上传文件</label>
+                    <input id="file" style="display: none" type="file" nv-file-select uploader="vm.uploader" accept=".jpg,.png,.jpge,.gif"/>
+                    <table class="table text-center" ng-show="vm.uploader.queue.length">
+                        <thead>
+                        <tr>
+                            <th class="text-center" width="50%">文件名</th>
+                            <th class="text-center" ng-show="vm.uploader.isHTML5">大小</th>
+                            <th class="text-center"  ng-show="vm.uploader.isHTML5">进度</th>
+                            <th class="text-center" >状态</th>
+                            <th class="text-center" >操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="item in vm.uploader.queue" class="ng-scope" ng-if="$first">
+                            <td><strong class="ng-binding">{{item.file.name}}</strong></td>
+                            <td ng-show="vm.uploader.isHTML5" nowrap="" class="ng-binding">{{ item.file.size/1024/1024 | number:2 }} MB</td>
+                            <td ng-show="vm.uploader.isHTML5">
+                                <div class="progress" style="margin-bottom: 0;">
+                                    <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                            </td>
+                            <td nowrap="">
+                                <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                    <span class="glyphicon glyphicon-upload"></span> 上传
+                                </button>
+                                <a class="btn btn-primary btn-xs" href="{{vm.data.url[$index]}}" target="_blank" ng-if="vm.data.url[$index] != undefined">
+                                    <span class="fa fa-arrow-circle-down"></span> 下载
+                                </a>
+                                <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove(); vm.clearImg()">
+                                    <span class="glyphicon glyphicon-trash"></span> 删除
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="form-group">
+                <label  class="col-md-2 control-label">姓名</label>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" placeholder="请输入姓名" name="name" ng-disabled="vm.noedit" ng-model="vm.params.name" required>
+                    <div class="error" ng-messages="ngForm.name.$error" ng-if="ngForm.name.$touched">
+                        <div ng-message="required">姓名不能为空</div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label  class="col-md-2 control-label">性别</label>
+                <div class="col-md-6">
+                    <label class="checkbox-inline">
+                        <input type="radio" name="optionsRadiosinline" value="1" ng-disabled="vm.noedit" ng-model="vm.params.sex" checked> 男
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="radio" name="optionsRadiosinline" value="2" ng-disabled="vm.noedit" ng-model="vm.params.sex"> 女
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label  class="col-md-2 control-label">工作状态</label>
+                <div class="col-md-4">
+                    <select class="form-control " ng-disabled="vm.status != 3" ng-model="vm.params.status">
+                        <!--<option value="">全部</option>-->
+                        <option value="1">在职</option>
+                        <option value="0">离职</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group" ng-if="vm.status!=3">
+                <label  class="col-md-2 control-label" >年级</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" ng-readonly="true"  ng-model="vm.params.grade | gradeFilter">
+                </div>
+            </div>
+            <div class="form-group">
+                <label  class="col-md-2 control-label">简介</label>
+                <div class="col-md-6">
+                    <textarea class="form-control" rows="4" cols="12" ng-disabled="vm.noedit" ng-model="vm.params.introduction"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label  class="col-md-2 control-label">邮箱</label>
+                <div class="col-md-6">
+                    <input type="email" class="form-control" placeholder="请输入邮箱" name="email"
+                           ng-disabled="vm.status != 3"
+                           ng-model="vm.params.account"
+                           required
+                           ng-minlength="5"
+                           ng-maxlength="30"
+                           record-validator="{{vm.params.account}}"
+                            >
+                    <div class="error" ng-messages="ngForm.email.$error" ng-if="ngForm.email.$touched">
+                        <div ng-message="required">邮箱不能为空</div>
+                        <div ng-message="email">邮箱格式无效</div>
+                        <div ng-message="minlength">邮箱太短</div>
+                        <div ng-message="maxlength">邮箱太长</div>
+                        <div ng-message="recordLoading">邮箱检查中...</div>
+                        <div ng-message="recordAvailable">该邮箱已被使用，请尝试其他邮箱</div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+        <form class="form-horizontal" name="ngFormPwd" novalidate>
+            <div class="form-group" ng-if="vm.status!=2 && vm.status!=4 && vm.id">
+                <label  class="col-md-2 control-label">密码</label>
+                <div class="col-md-4">
+                    <input type="text" onfocus="this.type='password'" class="form-control"
+                           placeholder="请输入密码"
+                           name="password"
+                           ng-model="vm.pwd"
+                           ng-disabled="!vm.changePwdStatus"
+                           required
+                           ng-minlength="6"
+                           ng-maxlength="16"
+                            >
+                    <div class="error" ng-messages="ngFormPwd.password.$error" ng-if="ngFormPwd.password.$touched">
+                        <div ng-message="required">密码不能为空</div>
+                        <div ng-message="minlength">密码太短</div>
+                        <div ng-message="maxlength">密码太长</div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-primary btn-sm pull-right" ng-click="vm.changePwd()" ng-if="!vm.changePwdStatus">修改密码</button>
+                    <button class="btn btn-primary btn-sm pull-right" ng-click="vm.changePwd()" ng-if="vm.changePwdStatus" ng-disabled="ngFormPwd.$invalid">保存密码</button>
+                </div>
+            </div>
+        </form>
+            <div class="form-group">
+                <div class="col-md-2 col-xs-3 ">
+
+                </div>
+                <div class="col-md-2 col-xs-3" ng-if="vm.status==1|| (vm.status==2 && vm.params.grade != -1 && vm.courseShow) || vm.status==3||vm.status==4||vm.status==5 ">
+                    <button class="btn btn-success btn-sm" ng-if="vm.status==1" ng-click="vm.update()" ng-disabled="ngForm.$invalid">保存</button>
+                    <button class="btn btn-success btn-sm" ng-if="vm.status==3" ng-click="vm.add()" ng-disabled="ngForm.$invalid">新增</button>
+                    <button class="btn btn-success btn-sm" ng-if="vm.status==2 && vm.params.grade != -1 && vm.courseShow" ui-sref="field.courseList({tid:vm.params.id,tname:vm.params.name,status:1})">课程</button>
+                    <button class="btn btn-success btn-sm" ng-if="vm.status==4" ng-click="vm.fireorhire(vm.params.id,vm.params.status,vm.params.name)">召回</button>
+                    <button class="btn btn-success btn-sm" ng-if="vm.status==5" ng-click="vm.update()" ng-disabled="ngForm.$invalid">保存</button>
+                </div>
+
+                <div class="col-md-2 col-xs-3 " ng-if="(vm.status==2 || vm.status==4) && globalPermission.updated">
+                    <button class="btn btn-success btn-sm "  ng-click="vm.edit()">编辑</button>
+                </div>
+                <div class="col-md-2 col-xs-3 ">
+                    <button class="btn btn-default btn-sm " ng-if="vm.status==1||vm.status==3 || vm.status==5" ng-click="vm.cancel()">取消</button>
+                    <button class="btn btn-default btn-sm " ng-if="vm.status==2||vm.status == 4" ng-click="vm.cancel()">返回</button>
+                </div>
+                <div class="col-md-2 col-xs-3" ng-if="globalPermission.deleted" >
+                    <button ng-if="vm.status==1" class="btn btn-danger btn-sm " data-toggle="modal" ng-click="vm.fireorhire(vm.params.id,vm.params.status,vm.params.name)" >
+                        辞退
+                    </button>
+                    <button ng-if="vm.status==2" class="btn btn-danger btn-sm " data-toggle="modal" ng-click="vm.fireorhire(vm.params.id,vm.params.status,vm.params.name)" >
+                        辞退
+                    </button>
+                    <button ng-if="vm.status==5" class="btn btn-danger btn-sm " data-toggle="modal" ng-click="vm.fireorhire(vm.params.id,vm.params.status,vm.params.name)" >
+                        召回
+                    </button>
+                </div>
+            </div>
+
+    </div>
+
+    </div>
+</div>
+</div>

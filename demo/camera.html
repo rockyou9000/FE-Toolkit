@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta content="yes" name="apple-mobile-web-app-capable"/>
+    <meta content="yes" name="apple-touch-fullscreen"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection"/>
+    <meta content="email=no" name="format-detection"/>
+    <meta charset="UTF-8">
+    <title>淡泊坊首页</title>
+    <link href="css/common.css" rel="stylesheet" type="text/css" />
+	<style>
+		input{
+			margin-top:30px;
+		}
+	</style>
+</head>
+<body style="position:relative;">
+
+<input type="file" accept="image/*" mulitple>  <span>图库 照相</span> <br>
+<input type="file" accept="image/*" capture="camera" value="111">  <span>照相</span> <br>
+<input type="file" accept="video/*" capture="camcorder">  <span>摄像</span> <br>
+<input type="file" accept="audio/*" capture="microphone">  <span>录音</span> <br>
+
+
+<p>
+	测试结果:iPhone机型上上述所有标签结果均为照相+照片图库功能
+			Android机型上表现不一:腾讯自带浏览器中表现基本正常
+								UC浏览器表现奇怪,分别为多个功能标签
+								chrome 正常
+								小米手机 在用image/* multiple 的时候缺少照相功能
+
+</p>
+
+<script type="text/javascript" src="http://cdnm.lqxshop.com/theme/default/js/echo.min.js"></script>
+<script type="text/javascript">echo.init({ offset: 300, throttle: 50, unload: false }); </script>
+</body>
+</html>

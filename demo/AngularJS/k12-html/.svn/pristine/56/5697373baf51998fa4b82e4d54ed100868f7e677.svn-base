@@ -1,0 +1,90 @@
+<div class="row pd-top-2">
+    <div class="panel panel-default pd-bottom-2">
+        <div class="row pd-top-2">
+            <form class="form-inline form-search" role="form">
+                <div class="form-group col-md-5 col-md-offset-1 col-xs-12">
+                    <label>年级</label>
+                    <select class="form-control textbook" ng-model="vm.params.grade">
+                        <option value="">全部</option>
+                        <option value="1">一年级</option>
+                        <option value="2">二年级</option>
+                        <option value="3">三年级</option>
+                        <option value="4">四年级</option>
+                        <option value="5">五年级</option>
+                        <option value="6">六年级</option>
+
+                    </select>
+                </div>
+
+                <div class="form-group col-md-6 col-xs-12">
+                    <label>教材名称</label>
+                    <input type="text" class="form-control" ng-model="vm.params.bname">
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <form class="form-inline form-search" role="form">
+                <div class="form-group col-md-5 col-md-offset-1 col-xs-12">
+
+                    <label>课程名称</label>
+                    <input type="text" class="form-control" ng-model="vm.params.name">
+                </div>
+
+                <div class="form-group col-md-6 col-xs-12">
+                    <label>教师</label>
+                    <input type="text" class="form-control" ng-model="vm.params.tname">
+                    <button class="btn btn-primary pull-right" ng-click="vm.search()" style="margin-right:4%;">查询</button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            丨&nbsp课程管理
+            <div class="btn-group pull-right">
+                <button class="btn btn-primary btn-xs" ng-if="globalPermission.created" ui-sref="field.courseDetail">
+                    <i class="fa fa-plus-square fa-fw"></i>新增
+                </button>
+            </div>
+        </div>
+        <div class="panel-body">
+            <table class="table add-table-border table-striped text-center" style="margin-right: 2%">
+                <thead>
+                <tr>
+                    <th class="text-center width15">课程名称</th>
+                    <th class="text-center width20">课程图片</th>
+                    <th class="text-center width20">简介</th>
+                    <th class="text-center width15">教材</th>
+                    <th class="text-center width10">教师</th>
+                    <th class="text-center width5">年级</th>
+                    <th class="text-center width15">操作</th>
+                </tr>
+                </thead>
+                <tbody >
+                <tr valign="top" ng-repeat="item in vm.list">
+                    <td>{{item.name}}</td>
+                    <td class="four1"><img ng-src="{{item.image | imgFilter}}" alt=""></td>
+                    <td class="ellipsis" title="{{item.introduction}}">{{item.introduction}}</td>
+                    <td>{{item.bookName}}</td>
+                    <td>{{item.teacherName}}</td>
+                    <td>{{item.grade}}</td>
+                    <td>
+                        <button class="btn btn-default btn-xs" ui-sref="field.courseDetail({id:item.id,statusa:1})">查看</button>
+                        <button class="btn btn-default btn-xs" ng-if="globalPermission.updated" ui-sref="field.courseDetail({id:item.id,statusa:0})">编辑</button>
+                        <button class="btn btn-danger btn-xs" ng-if="globalPermission.deleted" data-toggle="modal" data-target="#myModal"
+                                ng-click="vm.del(item.id, $index,item.name,item.grade)">删除
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+<paging ng-if="vm.page" next="{{vm.page}}"></paging>
+

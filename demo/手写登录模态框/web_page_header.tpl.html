@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="./css/TQ.css">
+	<link rel="stylesheet" type="text/css" href="./css/animate.min.css">
+	<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="./js/UI.min.js" type="text/javascript"></script>
+	<script src="./js/TQ.js" type="text/javascript" charset="utf-8"></script>
+	<script src="./js/MD5.js" type="text/javascript" charset="utf-8"></script>
+
+	<!-- <script>var jjquery = $.noConflict(true);</script> -->
+
+    <script src="./js/TQ_popup.js" type="text/javascript" charset="utf-8"></script>
+	<style>
+		.os_main_data_th{height:auto;}
+	</style>
+	<TITLE>全员客服中心</TITLE>
+</HEAD>
+<BODY>
+<!--added by maowei on 20160810 TQ页面头部-->
+<div class="tq_header"></div>
+<!--added by maowei on 20160810 TQ顾客信息板块-->
+<div class="os_add_box_con">
+	<h2 class="bigtitle">顾客信息</h2>
+	<button onclick="search_user(1)">显示</button>
+	<button id="q_login" onclick="q_show()">登录框</button>
+	<br/>
+    <script>
+		$(function(){
+			$('#search_user').bind("click",search_user);
+		});
+		function transFer(url){
+			window.location.href= url + '&userid=' + userids;
+		}
+
+		function search_user(i){
+			var userid = $.trim($('#userid').val());
+			if(!userid){
+				systemMsg.display('请输入顾客代码!');return
+			}
+			$('#search_user').unbind("click",search_user);
+			$('#search_user').html("搜索中...");
+			var showstatus = '';
+			if(typeof i != 'undefined' && i == 1)
+				showstatus = i;
+			else{
+				$('#search_user').unbind("click",search_user);
+				$('#search_user').html("搜索中...");
+			}
+			$.get("/?app_act=call_center3/getUserInfo&app_page=null&app_fmt=json",{userid:userid,showstatus:showstatus},function(data){
+				if(showstatus == ''){
+					$('#search_user').bind("click",search_user);
+					$('#search_user').html("搜索>>");
+				}
+				if(data == ''){
+					systemMsg.display('顾客代码不存在!');return;
+				}
+				$('#usersname').val(data.customer_name);
+				$('#usercard').val(data.customer_codes);
+				$('#mobilePhone').val(data.customer_tel);
+				$('#usershop').val(data.ba);
+				$('#sex').val(data.sexs);
+				$('#usersnames').val(data.nickname);
+				$('#userOrg').val(data.org_code);
+				$('#userArea').val(data.area_code);
+				$('#userShopCode').val(data.shop_names);
+				$('#userEmail').val(data.email);
+				$('#userEmailStatus').val(data.email_val);
+				$('#userBirthday').val(data.birthday);
+				$('#userInteger').val(data.customer_integral);
+				$('#isWx').val(data.is_wx);
+				$("#userConsumeMoney").val(data.consume_money);
+				$('#userMoney').val(data.money);
+				$('#userLevel').val(data.customer_level);
+				$('#userLevelTime').val(data.level_time);
+				$('#userAreas').val(data.areas);
+				$('#userRemark').val(data.remark);
+				userids = userid;
+				listes.init(1);
+			},"json");
+		}
+	</script>
+	<style type="text/css">
+		body{position: relative;}
+		ul,li{list-style:none;}
+		a{text-decoration: none;}
+		input{outline:0;}
+		.os_add_box_con{position: static}
+
+		.q_popup{
+			position:fixed;
+			top:0;
+			right:0;
+			bottom:0;
+			left:0;
+			width:100%;
+			height:100%;
+			text-align: center;
+			z-index: 999;
+		}
+		.q_popup .q_center{
+			display: inline-block;
+			width:1px;
+			height:100%;
+			line-height: 100%;
+			vertical-align: middle;
+		}
+		.q_popup .q_mask{
+			position: absolute;
+			top:0;
+			right:0;
+			bottom:0;
+			left:0;
+			width:100%;
+			height:100%;
+			background-color:#000;
+			opacity: 0.5;
+			filter:alpha(opacity=50);
+		}
+		.q_popup .q_login{
+			position: relative;
+			display: inline-block;
+			width:400px;
+			font-size: 16px;
+			border:1px solid #666;
+			text-align: left;
+			vertical-align: middle;
+			background-color:#fff;
+		}	
+		.q_popup .popheader{
+			height:40px;
+			line-height: 40px;
+			background-color:#029288;
+			color:#fff;
+			margin-bottom: 20px;
+			text-indent: 1em;
+		}
+		.q_popup .popcontent ul{
+			width:100%;
+		}
+		.q_popup .popcontent li{
+			display:block;
+			width:100%;
+			text-align: center;
+			margin:0 auto 10px;
+		}
+		.q_popup .popcontent input{
+			text-align: left;
+			width:280px;
+			/*height:40px;*/
+			border:1px solid #ddd;
+			color:#999;
+			padding:12px 10px;
+
+		}
+		.q_popup .poperror{
+			margin:0 auto 10px;
+			width:300px;
+			line-height: 30px;
+			background-color:#f6f0c4;
+			color:#ff6600;
+			text-align: center;
+			font-size: 14px;
+		}
+		.q_popup .bottomarea{
+			width:100%;
+			text-align: center;
+			margin-bottom: 20px;
+		}
+		.q_popup .bottomarea p{
+			color:#999;
+			font-size: 14px;
+			margin-bottom: 20px;
+		}
+		.q_popup .bottomarea a{
+			display: inline-block;
+			margin-left:15px;
+			width:90px;
+			height:30px;
+			line-height: 30px;
+			font-size: 16px;
+			background-color:#e1e1e1;
+			color:#666;
+		}
+		.q_popup .bottomarea a:hover{
+			color:#fff;
+			background-color:#30ccc1;
+			cursor: pointer;
+		}
+	</style>
+	<div class="q_popup"  style="display:none">
+		<div class="q_mask"></div>
+		<div class="q_center"></div>
+		<div class="q_login">
+			<div class="inner">
+				<div class="popheader">提示</div>
+		        <ul class="popcontent">
+		        	<li><input type="text" value="用户名" id="tel" data-val = '用户名' class="showlog"></li>
+		        	<li><input type="text" value="密码" data-val = '密码' class="showlog" id="psw"></li>
+		        	<div class="poperror"></div>
+		        </ul>
+		        <div class="bottomarea">
+		        	<p>请输入官网后台登录账号、密码进行解锁</p>
+	                <a class="popupConfirm" href="javascript:void(0);">确定</a>
+	                <a class="popupCancel" href="javascript:void(0);">取消</a>
+		        </div>
+		    </div>
+		</div>
+	</div>
+	<script>
+	//add by yepeng on 20160818 getElementsByClassName 兼容函数
+		function getClassNames(classStr,tagName){ 
+			if (document.getElementsByClassName) { 
+			return document.getElementsByClassName(classStr) 
+			}else { 
+			var nodes = document.getElementsByTagName(tagName),ret = []; 
+			for(i = 0; i < nodes.length; i++) { 
+			if(hasClass(nodes[i],classStr)){ 
+			ret.push(nodes[i]) 
+			} 
+			} 
+			return ret; 
+			} 
+			} 
+			function hasClass(tagStr,classStr){ 
+			var arr=tagStr.className.split(/\s+/ ); //add by yepeng on 20160818 这个正则表达式是因为class可以有多个,判断是否包含 
+			for (var i=0;i<arr.length;i++){ 
+			if (arr[i]==classStr){ 
+			return true ; 
+			} 
+			} 
+			return false ; 
+		}
+
+		//add by yepeng on 20160818 addEventListener 兼容函数
+		function myAddEvent(obj,event,fn)    // add by yepeng on 20160818  obj为要绑定事件的元素，event为要绑定的事件，fn为绑定事件的函数
+            {
+                if(obj.attachEvent)
+                {
+                    obj.attachEvent("on" + event,fn);
+                }
+                else
+                {
+                    obj.addEventListener(event,fn,false);
+                }
+            }
+
+        //add by yepeng on 20160818 为input元素绑定foucs 事件,点击提示文字消失,离开恢复
+		function identify (className){
+			var input = getClassNames(className,'input');
+			var error = getClassNames('poperror','div')[0];
+			// console.log(input);
+			for(i=0;i<input.length;i++){
+				myAddEvent(input[i],'focus',handler)
+				myAddEvent(input[i],'blur',handler2)
+			}
+			function handler(){
+				if (this.value == '用户名' || this.value == '密码' )
+					this.value = '';
+					this.id == 'psw' ? this.type = 'password' : this.type = 'tel';
+					this.style.color = 'black';
+					error.innerHTML = '';
+			}
+			function handler2(){
+				if (this.value == ''){
+					this.value = this.dataset.val;
+					this.id == 'psw' ? this.type = 'text' : this.type = 'tel';
+					this.style.color = '#999';
+					error.innerHTML = '';
+				}
+			}
+		}
+
+		identify('showlog');
+
+		var q_show = function(){
+			 function hasClass(obj, cls) {
+	            return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+	        }
+	        function addClass(obj, cls) {
+	            if (!this.hasClass(obj, cls)) obj.className += " " + cls;
+	        }
+			var q_login = getClassNames('q_login','div')[0];
+			var q_popup = getClassNames('q_popup','div')[0];
+			q_popup.style.display='block';
+			addAnimate(q_login,2);
+			document.getElementsByTagName('body')[0].style.overflow= 'hidden';
+		};
+
+		//add by yepeng on 20160818 封装动画函数
+		function addAnimate (el,type){
+			function hasClass(obj, cls) {
+	            return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+	        }
+
+	        function addClass(obj, cls) {
+	            if (!this.hasClass(obj, cls)) obj.className += " " + cls;
+	        }
+
+	        function removeClass(obj, cls) {
+	            if (hasClass(obj, cls)) {
+	                var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+	                obj.className = obj.className.replace(reg, ' ');
+	            }
+	        }
+	        if (type == 1){
+		        removeClass(el,'wobble');
+		        removeClass(el,'animated');
+		        addClass(el,'')
+		        addClass(el,'animated')}
+
+	        if (type==2){
+	        	removeClass(el,'');
+		        removeClass(el,'animated');
+		        addClass(el,'wobble')
+		        addClass(el,'animated')}
+	        }
+
+		(function(){
+			var ret = function(){
+				var q_confrim = getClassNames('popupConfirm','a')[0];
+				var q_cancel = getClassNames('popupCancel','a')[0];
+				var q_popup = getClassNames('q_popup','div')[0];
+				var tel = document.getElementById('tel');
+				var psw = document.getElementById('psw');
+				var error = getClassNames('poperror','div')[0];
+
+				function clean(){
+					tel.value = "用户名";
+					tel.style.color= '#999';
+					psw.value = "密码";
+					psw.style.color= '#999';
+					psw.type= 'text';
+					document.getElementsByTagName('body')[0].style.overflow= 'auto';
+				}
+				function test(){
+					var t_val = tel.value;
+					var p_val = psw.value;
+					var t_md5 = encryptToMD5(t_val);
+					var p_md5 = encryptToMD5(p_val);
+					console.log(t_md5);
+					console.log(p_md5);
+
+					if(t_val == '用户名'){
+						error.innerHTML = '请输入用户名';
+						return;
+					}else if(p_val == '密码'){
+						error.innerHTML = '请输入密码';
+						return;
+					}
+
+					clean();
+					addAnimate(q_login,1);
+					q_popup.style.display = 'none';
+				}
+
+				var q_login = getClassNames('q_login','div')[0];
+				var q_popup = getClassNames('q_popup','div')[0];
+
+				// add by yepeng on 20160818 用户确认按钮 handler
+				myAddEvent(q_confrim,'click',function(){
+					alert('用户选择确认!');
+					test();
+				});
+				// add by yepeng on 20160818 用户取消按钮 handler
+				myAddEvent(q_cancel,'click',function(){
+					clean();
+					addAnimate(q_login,1);
+					q_popup.style.display = 'none';
+				})
+			}
+			return ret();
+		}())
+	</script>

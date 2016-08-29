@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <meta charset="UTF-8">
+    <title>AngularJs demo</title>
+    <link href="css/common.css" rel="stylesheet">
+    <script src="js/TouchSlide.1.1.js"></script>
+    <script src="http://cdn.gbtags.com/angular.js/1.2.20/angular.min.js"></script>
+    <script src="http://cdn.gbtags.com/angular.js/1.2.20/angular-route.min.js"></script>
+    <script src="http://cdn.gbtags.com/angular.js/1.2.20/angular-animate.min.js"></script>
+    <script src="http://cdn.gbtags.com/prefixfree/1.0.7/prefixfree.min.js"></script>
+    <style>
+        .topsubMenu{
+            background-color: #def0f4;
+            border-bottom: 1px solid #aee8ef;
+            border-top: 1px solid #aee8ef;
+            position: fixed;
+            top: 65px;
+            width: 100%;
+            z-index:666;
+            opacity:0.8;
+        }
+        .topsubMenu ul, .product_tab ul, .bottomMenu ul{
+            display: -webkit-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+        }
+        .topsubMenu ul li{
+             -webkit-box-flex: 1;-ms-flex: 1;-webkit-flex: 1;flex: 1;
+            height:45px;
+        }
+        .topsubMenu ul li a{
+            display:block;
+            padding-top:10px;
+        }
+
+        /***added by maowei on 20160419 首页底部导航 start***/
+        .bottomMenu{
+            position:fixed;
+            bottom:0px;
+            left:0px;
+            width:100%;
+            background-color:#60605f;
+            height:40px;
+            opacity:0.80;
+        }
+
+        .bottomMenu ul{
+
+        }
+
+        .bottomMenu .dline{
+            margin-left:3px;
+            margin-right:3px;
+            width:20px;
+            text-align:center;
+            color:#ffffff;
+        }
+
+        .bottomMenu ul li{
+             -webkit-box-flex: 1;-ms-flex: 1;-webkit-flex: 1;flex: 1;
+            width:33%;
+        }
+        .bottomMenu ul li a{
+            color:#ffffff;
+            display: block;
+            font-size:12px;
+            /*font-size: 1em;*/
+            padding-top:8px;
+            text-align: center;
+        }
+        .bottomMenu ul li a:hover{
+            text-decoration:none;
+        }
+
+        .btmMenu1, .btmMenu2, .btmMenu3{
+            background-image:url("http://pic.lqxshop.com/sources/danbofang/bg_ico.png");
+            background-repeat:no-repeat;
+        }
+
+        /***首页底部导航end***/
+
+        /***added by maowei on 20160419 清除浮动 start***/
+        .clear{clear:both;height:0px;overflow:hidden; width:100%;}
+        .clearfix:after {content: "."; display: block; height: 0; clear: both; visibility: hidden;}
+        .clearfix { display: inline-block; }
+        * html .clearfix { zoom:1;}
+        .clearfix { display:block; }
+        /***added by maowei on 20160419 清除浮动 end***/
+
+        #Main{
+            position:relative;
+            left:0px;
+            z-index:111;
+            width:100%;
+            max-width: 640px;
+            min-width: 320px;
+        }
+
+        #Main-mask{
+            left:0px;
+            width:800px;
+            height:1000px;
+            display:none;
+            background-color:#000;
+            z-index:666666;
+            position:fixed;
+            top:-55px;
+            opacity:0.6;
+        }
+
+        /***added by maowei on 20160419 首页顶部导航及搜索框start***/
+        .topMenu{
+            position:fixed;
+            top:0px;
+            left:0px;
+            width:100%;
+            height:55px;
+            z-index:111;
+            padding-top:10px;
+            background-color:#ffffff;
+        }
+
+        .topBar{
+            height:55px;
+            position:relative;
+            text-align:center;
+            line-height:51px;
+            font-family:microsoft yahei;
+            font-size:16px;
+            color:#ffffff;
+            font-weight:normal;
+        }
+        .topBar img{
+            margin:0px auto 0 auto;
+            max-width:26%;
+        }
+        .hislogo{
+            background-image:url("http://pic.lqxshop.com/sources/danbofang/bg_ico.png");
+            background-position:center center;
+            background-repeat:no-repeat;
+        }
+
+        /***added by maowei on 20160419 首页图标***/
+        .ico_uc, .ico_score, .ico_apply, .ico_index, .ico_newfind, .ico_mywork, .ico_submenu, .ico_magnifier, .ico_goback, .ico_cancel, .ico_larrow, .ico_shoppingcart{
+            background-image:url("http://pic.lqxshop.com/sources/danbofang/bg_ico.png");
+            background-repeat:no-repeat;
+            margin:0 auto;
+            display:block;
+            background-size:225px auto;
+        }
+
+        .ico_submenu{
+            background-position: 0 0;
+            height: 27px;
+            left: 12px;
+            position: absolute;
+            top: 7px;
+            width: 28px;
+        }
+        .ico_magnifier{
+            background-position: -79px -2px;
+            height: 27px;
+            position: absolute;
+            right: 12px;
+            top: 7px;
+            width: 41px;
+        }
+
+        .ico_shoppingcart{
+            background-position: -32px 0;
+            height: 30px;
+            position: absolute;
+            right: 62px;
+            top: 5px;
+            width: 41px;
+        }
+
+        .ico_goback{
+            background-position: -89px 0px;
+            height: 25px;
+            right: 8px;
+            position: absolute;
+            top: 15px;
+            width: 25px;
+        }
+        .ico_uc{
+            background-position: 0 -36px;
+            height: 27px;
+            width: 97px;
+
+        }
+        .ico_score{
+            background-position: 0 -61px;
+            height: 27px;
+            width: 97px;
+
+        }
+        .ico_apply{
+            background-position: 0 -87px;
+            height: 27px;
+            width: 97px;
+
+        }
+        .ico_index{
+            background-position: 0 -119px;
+            height: 23px;
+
+            width: 97px;
+        }
+        .ico_newfind{
+            background-position: 0 -143px;
+            height: 23px;
+
+            width: 97px;
+        }
+        .ico_mywork{
+            background-position: 0 -166px;
+            height: 23px;
+            width: 97px;
+        }
+
+
+        /***added by maowei on 20160419 首页顶部BANNER轮播 start***/
+        .focusTop{padding-top:57px; max-width:100%;  margin:0 auto; position:relative; overflow:hidden; z-index:11;   }
+        .focusTop .hd{ width:100%; height:11px;  position:absolute; z-index:1; bottom:13px; text-align:center;  }
+        .focusTop .hd ul{ display:inline-block; height:5px; padding:3px 5px;
+             -webkit-border-radius:5px; -moz-border-radius:5px; border-radius:5px; font-size:0; vertical-align:top;
+        }
+        .focusTop .hd ul li{ display:inline-block; width:12px; height:12px; -webkit-border-radius:12px; -moz-border-radius:12px; border-radius:12px; background:#606160; border:solid 1px #606160; margin:0 3px;  vertical-align:top; overflow:hidden;   }
+        .focusTop .hd ul .on{ border:solid 1px #22607b; background-color:#ffffff;}
+
+        .focusTop .bd{ position:relative; z-index:0; }
+        .focusTop .bd li img{ width:100%;}
+        .focusTop .bd li a{ -webkit-tap-highlight-color:rgba(0, 0, 0, 0); /* 取消链接高亮 */  }
+        /***首页顶部BANNER轮播 end***/
+
+        /***首页中部左右产品广告 start***/
+        .pregion{
+
+        }
+        .p-left{
+            width:50%;
+            float:left;
+        }
+        .p-left img{
+            border-top:solid 1px #6da9cd;
+            border-bottom:solid 1px #6da9cd;
+            max-width:100%;
+        }
+        .p-right{
+            width:50%;
+            float:right;
+        }
+        .p-right img{
+            border-top:solid 1px #6da9cd;
+            border-bottom:solid 1px #6da9cd;
+            max-width:100%;
+        }
+
+        /***added by maowei on 20160419 产品系列***/
+        .p-region{
+            padding-top:55px;
+            padding-bottom:40px;
+        }
+        .p-region img{
+            max-width:100%;
+        }
+
+        .product_tab ul li{
+             -webkit-box-flex: 1;-ms-flex: 1;-webkit-flex: 1;flex: 1;
+            width:33%;
+            text-align:center;
+            color:#595757;
+        }
+        .product_tab ul li a{
+            display:block;
+            border-left:solid 1px #898989;
+            border-bottom:solid 1px #898989;
+            background-color:#ebebeb;
+            color:#595757;
+            padding-top:8px;
+            padding-bottom:8px;
+            font-family:microsoft yahei;
+            font-size:14px;
+        }
+        .product_tab ul .thisseled a{
+            border-left:1px solid #898989;
+            background-color:#ffffff;
+            border-bottom:solid 1px #ffffff;
+            padding-top:8px;
+            padding-bottom:8px;
+            color:#4886a8;
+        }
+
+        .product_content{
+            padding-bottom:40px;
+        }
+
+        .product_content ul li{
+            display:none;
+            padding-bottom:20px;
+        }
+
+        .product_img{
+            width:100%;
+            max-width:50%;
+            float:left;
+        }
+        header{
+            display:none;
+        }
+        footer{
+            display:none;
+        }
+        .bd{
+            border:none;
+        }
+    </style>
+</head>
+<body>
+<div id="Main"  >
+    <!-- 淡泊坊头部导航 start-->
+    <div class="topMenu">
+        <div class="topBar">
+            <img src="http://pic.lqxshop.com/sources/danbofang/logo_dbf.png"  alt=""/>
+            <div class="ico_shoppingcart"></div>
+            <div class="ico_submenu"></div>
+            <div class="ico_magnifier"></div>
+        </div>
+    </div>
+    <!--副标题start-->
+    <div class="topsubMenu">
+        <ul>
+            <li>
+                <a href="javascript:;">
+                    <i class="ico_uc"></i>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <i class="ico_score"></i>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <i class="ico_apply"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!--副标题end-->
+    <!-- 品牌官网头部导航 end-->
+
+    <!-- 顶部输入框 start-->
+    <div class="topSearch" id="tSearch" style="display:none;">
+        <div class="inner">
+            <div class="magnifier"></div>
+            <div class="cancel"></div>
+            <input type="text" class="inputstyle" value="请输入关键词" />
+        </div>
+    </div>
+    <!-- 顶部输入框 end-->
+
+    <!-- 首页上部区域BANNER切换  start-->
+    <div id="bannerFocus" class="focusTop">
+        <div class="hd">
+            <ul></ul>
+        </div>
+        <div class="bd">
+            <ul>
+                <li><a href="#"><img _src="http://pic.lqxshop.com/sources/danbofang/demo_index_top_banner.jpg" /></a></li>
+                <li><a href="#"><img _src="http://pic.lqxshop.com/sources/danbofang/demo_index_top_banner.jpg" /></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        TouchSlide({
+            slideCell:"#bannerFocus",
+            titCell:".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+            mainCell:".bd ul",
+            effect:"left",
+            autoPlay:true,//自动播放
+            autoPage:true, //自动分页
+            switchLoad:"_src" //切换加载，真实图片路径为"_src"
+        });
+    </script>
+    <!-- 首页上部区域BANNER切换  end-->
+
+    <!-- 首页中部广告区域 start-->
+    <div class="pregion">
+        <!-- 首页中部广告左侧 start-->
+        <div class="p-left">
+            <img src="http://pic.lqxshop.com/sources/danbofang/demo_index_mleft.jpg" alt=""/>
+        </div>
+        <!-- 首页中部广告左侧 end-->
+
+        <!-- 首页中部广告右侧 start-->
+        <div class="p-right">
+            <img src="http://pic.lqxshop.com/sources/danbofang/demo_index_mright.jpg" alt=""/>
+        </div>
+        <!-- 首页中部广告右侧 end-->
+
+        <div class="clear"></div>
+    </div>
+    <!-- 中部广告区域 end-->
+
+    <!-- 产品区域 start -->
+<div ng-app="myApp">
+    <div class="product_tab" ng-controller="myTab">
+        <ul>
+            <li ng-repeat="tab in tabs" ><a href="{{tab.href}}">{{tab.title}}</a></li>
+        </ul>
+    </div>
+    <div class="tap"   ng-controller="myData" >
+
+        <!-- inject our views using ng-view -->
+        <!-- each angular controller applies a different class here -->
+        <div ng-view></div>
+
+        <!-- 定义视图相关模板 -->
+        <script type="text/ng-template" id="home.htm">
+            <div >
+                <h2> 首页 </h2>
+                <img  class="product_img" ng-repeat="x in names"  src="{{x}}" alt="">
+                <div class="clear"></div>
+            </div>
+
+        </script>
+
+        <script type="text/ng-template" id="about.htm">
+                <h2> 关于 </h2>
+                <img class="product_img" ng-repeat="y in names2"  src="{{y}}" alt="">
+                <div class="clear"></div>
+
+        </script>
+
+        <script type="text/ng-template" id="contact.htm">
+                <h2> 联系 </h2>
+                <img  class="product_img" ng-repeat="z in names3"  src="{{z}}" alt="">
+                <div class="clear"></div>
+        </script>
+    </div>
+    <!--<div class="product_content" ng-controller="myData">-->
+        <!--<ul>-->
+            <!--<li>-->
+                <!--<img ng-repeat="x in names"  src="{{x}}" alt="">-->
+                <!--<div class="clear"></div>-->
+            <!--</li>-->
+            <!--<li>-->
+                <!--<img ng-repeat="y in names2"  src="{{y}}" alt="">-->
+                <!--<div class="clear"></div>-->
+            <!--</li>-->
+            <!--<li style="display:block;">-->
+                <!--<img ng-repeat="z in names3" src="{{z}}" alt="">-->
+                <!--<div class="clear"></div>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</div>-->
+</div>
+    <!-- 产品区域 END -->
+
+    <!-- 底部导航 START -->
+    <!--<div class="bottomMenu">
+        <ul>
+            <li>
+                <a href="javascript:;">
+                    <i class="ico_index"></i>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <i class="ico_newfind"></i>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    <i class="ico_mywork"></i>
+                </a>
+            </li>
+        </ul>
+    </div>-->
+    <!-- 网站底部导航 end -->
+
+    <script>
+        var app = angular.module('myApp', ['ngRoute', 'ngAnimate']);
+
+        app.controller('myTab', function($scope){
+//              $scope.title1 ="镇店之宝";
+//              $scope.title2 ="大家都喜欢";
+//              $scope.title3 ="私房皂";
+
+            $scope.tabs = [
+                {title : '镇店之宝' ,href:'#about'},
+                {title : '大家都喜欢',href:'#home'},
+                {title : '私房皂' ,href:'#contact'}
+            ];
+//            $scope.urls = [
+//                {name : '#home' },
+//                {name : '#about'},
+//                {name : '#nice' }
+//            ];
+        });
+
+        app.controller('myData', function($scope) {
+            $scope.names = ["http://pic.lqxshop.com/sources/danbofang/dbgp_03.jpg",
+                "http://pic.lqxshop.com/sources/danbofang/dbgp_14.jpg",
+                "http://pic.lqxshop.com/sources/danbofang/dbgp_12.jpg",
+                "http://pic.lqxshop.com/sources/danbofang/dbgp_05.jpg",
+                "http://pic.lqxshop.com/sources/danbofang/dbgp_02.jpg",
+                "http://pic.lqxshop.com/sources/danbofang/dbgp_15.jpg",
+                "http://pic.lqxshop.com/sources/danbofang/dbgp_04.jpg",
+                "http://pic.lqxshop.com/sources/danbofang/dbgp_13.jpg"
+            ];
+            $scope.names2 = ["http://pic.lqxshop.com/sources/danbofang/dbgp_02.jpg",
+                "http://pic.lqxshop.com/sources/danbofang/dbgp_03.jpg",
+                "http://pic.lqxshop.com/sources/danbofang/dbgp_08.jpg",
+                "http://pic.lqxshop.com/sources/danbofang/dbgp_05.jpg",
+                "http://pic.lqxshop.com/sources/danbofang/dbgp_12.jpg",
+                "http://pic.lqxshop.com/sources/danbofang/dbgp_13.jpg",
+                "http://pic.lqxshop.com/sources/danbofang/dbgp_18.jpg",
+                "http://pic.lqxshop.com/sources/danbofang/dbgp_17.jpg"
+            ];
+            $scope.names3 = ["http://pic.lqxshop.com/sources/danbofang/dbgp_20.jpg",
+                "http://pic.lqxshop.com/sources/danbofang/dbgp_16.jpg",
+                "http://pic.lqxshop.com/sources/danbofang/dbgp_17.jpg",
+                "http://pic.lqxshop.com/sources/danbofang/dbgp_18.jpg",
+                "http://pic.lqxshop.com/sources/danbofang/dbgp_19.jpg",
+                "http://pic.lqxshop.com/sources/danbofang/dbgp_02.jpg",
+                "http://pic.lqxshop.com/sources/danbofang/dbgp_21.jpg"
+            ];
+
+        });
+        app.config(['$routeProvider',
+            function($routeProvider) {
+                $routeProvider.
+                when('/home', {
+                    templateUrl: 'home.htm',
+                    controller: 'HomeController'
+                }).
+                when('/about', {
+                    templateUrl: 'about.htm',
+                    controller: 'AboutController'
+                }).
+                when('/contact', {
+                    templateUrl: 'contact.htm',
+                    controller: 'ContactController'
+                }).
+                otherwise({
+                    redirectTo: '/home'
+                });
+            }]);
+
+        app.controller('HomeController', function($scope) {
+            $scope.pageClass = 'page-home';
+            $scope.message = "<这里是首页>";
+        });
+
+        // about page controller
+        app.controller('AboutController', function($scope) {
+            $scope.pageClass = 'page-about';
+            $scope.message = "<这里是关于页>";
+        });
+
+        // contact page controller
+        app.controller('ContactController', function($scope) {
+            $scope.pageClass = 'page-contact';
+            $scope.message = "<这里是联系页>";
+        });
+
+    </script>
+</div>
+
+</div>
+</body>
+</html>

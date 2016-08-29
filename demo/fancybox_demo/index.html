@@ -1,0 +1,154 @@
+
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, maximum-scale=1, user-scalable=no" />
+	<meta content="yes" name="apple-mobile-web-app-capable"/>
+	<meta content="yes" name="apple-touch-fullscreen"/>
+	<meta content="black" name="apple-mobile-web-app-status-bar-style">
+	<meta content="telephone=no" name="format-detection"/>
+	<meta content="email=no" name="format-detection"/>
+	<title>BA社会化营销平台</title>
+	<link rel="stylesheet" href="http://devm.lqxshop.com/ba/css/themes/default/jquery.mobile-1.4.3.min.css?t=20160505">
+	<link rel="stylesheet" href="http://devm.lqxshop.com/ba/_assets/css/jqm-demos.css?t=20160505">
+	<link rel="stylesheet" href="http://devm.lqxshop.com/ba/css/common/common.css?t=20160505">
+	<link rel="stylesheet" href="http://devm.lqxshop.com/ba/css/common/scrollbar.css?t=20160505">
+	<link rel="stylesheet" href="http://devm.lqxshop.com/ba/css/menu.css?t=20160518">
+	<script src="http://devm.lqxshop.com/ba/js/jquery-1.11.0.min.js"></script>
+	<script src="http://devm.lqxshop.com/ba/_assets/js/index.js"></script>
+	<script src="http://devm.lqxshop.com/ba/js/jquery.mobile-1.4.3.min.js"></script>
+	<script src="http://devm.lqxshop.com/ba/js/common.js"></script>
+	<script src="http://devm.lqxshop.com/ba/js/layer.m.dev.js"></script>
+</head>
+<body>
+<script src="http://devm.lqxshop.com/ba/js/iscroll.js"></script>
+<script src="http://devm.lqxshop.com/ba/js/global.js"></script>
+<script src="http://devm.lqxshop.com/ba/js/jqmautocomplete/jqm.autoComplete-1.5.2.js"></script>
+<script src="http://devm.lqxshop.com/ba/js/jqmautocomplete/code.js"></script>
+<div data-role="page" class="jqm-demos" id="contentPage1" data-dom-cache="true">
+	<div data-role="header" data-position="fixed" data-theme="a" data-tap-toggle="false">
+		<a href="javascript:void(0)" data-rel="back" class="ui-btn ui-btn-left ui-alt-icon ui-nodisc-icon ui-corner-all ui-btn-icon-notext ui-icon-carat-l">返回</a>
+		<h1>BA社会化营销平台</h1>
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#">工号：110738</a></li>
+				<li><a href="#">姓名：黄甜</a></li>
+			</ul>
+		</div>
+	</div><!-- /header -->
+	<div class="ui-content" role="main">
+		<div id="wrapperContent1" class="wrapper top75">
+			<div id="scrollerContent1" class="scroller">
+				<!--新增 by yepeng-->
+				<link rel="stylesheet" href="js/fancybox/jquery.fancybox.css">
+				<style>
+					.ui-table-columntoggle-btn{
+						display:none;
+					}
+					#user_table{
+						margin-top: 15px;
+					}
+					#user_table td,#user_table th{
+						border:1px solid #999;
+					}
+					.table_button {
+						text-align: center !important;
+						background-color: #ff9b25;
+						font-weight: bold;
+						text-shadow: none;
+						cursor:pointer;
+					}
+
+				</style>
+				<script src="js/fancybox/jquery.mousewheel-3.0.6.pack.js"></script>
+				<script src="js/fancybox/jquery.fancybox.pack.js"></script>
+				<script src="js/fancybox/jquery.fancybox.js"></script>
+				<script>
+					$(function(){
+						$(document).on('click','.table_button',function(e){
+							var that = e.target;
+							var url = $(that).attr('data-url');
+							showImage(url)
+						})
+					});
+					function showImage(img){
+						$.fancybox.open({
+							href : img,
+							type : 'image'
+						});
+					}
+				</script>
+				<table data-role="table"  data-mode="columntoggle" class="ui-responsive ui-shadow" id="user_table">
+					<thead>
+					<tr>
+						<th>ID</th>
+						<th>名称</th>
+						<th>操作</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td>1</td>
+						<td>AAAAAAAA</td>
+						<td class="table_button" data-url="http://testpic.lqxshop.com//sources/goods/C.C.F.11.24/C.C.F.11.24_000_1_0586--w_450_h_450.jpg">查看</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>AAAAAAAA</td>
+						<td class="table_button" data-url="http://testpic.lqxshop.com//sources/goods/C.C.F.11.24/C.C.F.11.24_000_1_0586--w_450_h_450.jpg">查看</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td>AAAAAAAA</td>
+						<td class="table_button" data-url="http://testpic.lqxshop.com//sources/goods/C.C.F.11.24/C.C.F.11.24_000_1_0586--w_450_h_450.jpg">查看</td>
+					</tr>
+					<tr >
+						<td>1</td>
+						<td>AAAAAAAA</td>
+						<td class="table_button" data-url="http://testpic.lqxshop.com//sources/goods/C.C.F.11.24/C.C.F.11.24_000_1_0586--w_450_h_450.jpg">查看</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+			<input type="hidden" name="cardId" id="cardId" value=""/>
+			<input type="hidden" name="code" id="code" value=""/>
+			<input type="hidden" name="baNo" id="baNo" value="110738"/>
+			<input type="hidden" name="baName" id="baName" value="黄甜"/>
+		</div>
+	</div><!-- /content -->
+
+	<div class="menu-body" style="display: none;"><!--body-->
+		<!--@add by yangjin 20160418 业绩栏 start-->
+		<!--@add by yangjin 20160418 业绩栏 end-->
+		<!--@add by yangjin 20160418 工具栏 start---->
+		<!--@add by yangjin 20160418 工具栏 end-->
+	</div>
+
+
+
+	<!--menu-body-->
+	<div class="bottom-menu">
+		<div id="b-memu-ul" class="b-menu-4">
+			<ul class="b-m-box">
+				<li>
+					<a href="productlist" data-role="none" target="_self"><span>商品</span></a>
+				</li>
+				<li id="achievement-icon">
+					<a href="/bamarketing/index/bamenu_yeji" data-role="none" ><span>业绩</span></a>
+
+				</li>
+				<li id="tool-icon">
+					<a href="/bamarketing/index/bamenu_tool" data-role="none"><span>工具</span></a>
+
+				</li>
+				<li>
+					<a href="attention" data-role="none" target="_self"><span>吸粉</span></a>
+				</li>
+			</ul>
+		</div>
+		<!-- <div id="nav4_masklayer" class="masklayer_div on"></div> -->
+	</div>
+</div>
+</body>
+</html>

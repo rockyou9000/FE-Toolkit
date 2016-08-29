@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="http://apps.bdimg.com/libs/bootstrap/3.2.0/css/bootstrap.min.css">
+	<script src="http://www.w3cschool.cc/try/angularjs/1.2.5/angular.min.js"></script>
+</head>
+<body ng-app="app">
+	<div ng-controller="FCtrl">
+		<input type="text" ng-model="data.msg">
+		<h2>{{data.msg}}</h2>
+	</div>
+	<div ng-controller="SCtrl">
+		<input type="text" ng-model="data.msg">
+		<h2>{{data.msg}}</h2>
+	</div>
+</body>
+<script>
+	angular.module('app',[])
+	.factory('Data',function(){
+		return {
+			msg:'我来自factory'
+		}
+	})
+	.controller('FCtrl',function($scope,Data){
+		$scope.data=Data
+	})
+	.controller('SCtrl',function($scope,Data){
+		$scope.data=Data
+	})
+</script>
+</html>

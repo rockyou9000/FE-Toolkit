@@ -1,0 +1,56 @@
+<div class="row pd-top-2">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                模块列表
+                <div class="btn-group pull-right">
+                    <button class="btn btn-primary btn-xs" ui-sref="field.moduleDetail">
+                        <i class="fa fa-plus-square fa-fw"></i>新增模块
+                    </button>
+                </div>
+            </div>
+            <div class="panel-body">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>名称</th>
+                        <th>Url</th>
+                        <th>父节点</th>
+                        <th>icon</th>
+                        <th>顺序</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="li in vm.list">
+                        <td>{{li.id}}</td>
+                        <td>{{li.name}}</td>
+                        <td>{{li.url}}</td>
+                        <td>{{li.parentID}}</td>
+                        <td><i class="fa {{li.icon}}"></i> {{li.icon}}</td>
+                        <th>{{li.level}}</th>
+                        <td>
+                            <button class="btn btn-default btn-xs" ng-if="globalPermission.updated" ui-sref="field.moduleDetail({id: li.id})">编辑</button>
+                            <button class="btn btn-danger btn-xs" ng-if="globalPermission.deleted" ng-click="vm.delete(li.id)">删除</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div style="color:#777;">
+                    <h5>field.teacherList中</h5>
+                    <ul>
+                        <li>status为0,1，对应教师状态分别为离职，在职。</li>
+                        <li>grade为-1，1，2，3，4，5，6，对应教师年级分别为无年级，一年级，二年级，三年级，四年级，五年级，六年级。</li>
+                    </ul>
+                    <h5>field.testList中</h5>
+                    <ul>
+                        <li>qtype为空，1，2，3，对应测验类型分别为全部类型，跟读，选择，开放式问答。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <paging ng-if="vm.page" next="{{vm.page}}"></paging>
+    </div>
+</div>

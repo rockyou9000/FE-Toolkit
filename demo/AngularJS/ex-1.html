@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ex-1</title>
+	<link rel="stylesheet" href="css/foundation.css">
+</head>
+<body style="padding:10px;" ng-app="app">
+	<div ng-controller="MyCtrl">
+		<input type="text" ng-model="unname">
+		<h1>{{unname}}</h1>
+		<div ng-clock class="ng-clock">{{'用户名'+unname}}</div>
+		<div class="{{unname}}">{{unname}}</div>
+	</div>
+</body>
+<script src="js/angular.js"></script>
+<script>
+	angular.module('app',[])
+	.controller('MyCtrl',function($scope){
+		$scope.msg="angular";
+
+	})
+</script>
+</html>

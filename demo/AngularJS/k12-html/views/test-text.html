@@ -1,0 +1,96 @@
+<div class="form-group">
+    <label class="col-md-2 control-label">听力内容</label>
+    <div class="col-md-9">
+        <textarea ng-disabled="vm.editable" class="form-control" rows="4" cols="12"
+                  ng-model="vm.showData.test.content" name="content" required></textarea>
+        <div class="error" ng-messages="ngForm.content.$error" ng-if="ngForm.content.$touched">
+            <div ng-message="required">听力内容不能为空</div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-md-2 control-label">问题</label>
+    <div class="col-md-9">
+        <input ng-disabled="vm.editable" type="text" class="form-control" ng-model="vm.showData.test.question" name="qusetion" required>
+        <div class="error" ng-messages="ngForm.qusetion.$error" ng-if="ngForm.qusetion.$touched">
+            <div ng-message="required">问题不能为空</div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-md-2 control-label">问题翻译</label>
+    <div class="col-md-9">
+        <input ng-disabled="vm.editable" type="text" class="form-control" ng-model="vm.showData.test.translation" name="translation" required>
+        <div class="error" ng-messages="ngForm.translation.$error" ng-if="ngForm.translation.$touched">
+            <div ng-message="required">问题翻译不能为空</div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-md-2 control-label">选项A</label>
+    <div class="col-md-9">
+        <input ng-disabled="vm.editable" type="text" class="form-control" ng-model="vm.showData.test.optionA" name="optionA" required>
+        <div class="error" ng-messages="ngForm.optionA.$error" ng-if="ngForm.optionA.$touched">
+            <div ng-message="required">选项A不能为空</div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-md-2 control-label">选项B</label>
+    <div class="col-md-9">
+        <input ng-disabled="vm.editable" type="text" class="form-control" ng-model="vm.showData.test.optionB" name="optionB" required>
+        <div class="error" ng-messages="ngForm.optionB.$error" ng-if="ngForm.optionB.$touched">
+            <div ng-message="required">选项B不能为空</div>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="col-md-2 control-label">选项C</label>
+    <div class="col-md-9">
+        <input ng-disabled="vm.editable" type="text" class="form-control" ng-model="vm.showData.test.optionC" name="optionC" required>
+        <div class="error" ng-messages="ngForm.optionC.$error" ng-if="ngForm.optionC.$touched">
+            <div ng-message="required">选项C不能为空</div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-md-2 control-label">选项D</label>
+    <div class="col-md-9">
+        <input ng-disabled="vm.editable" type="text" class="form-control" ng-model="vm.showData.test.optionD" name="optionD" required>
+        <div class="error" ng-messages="ngForm.optionD.$error" ng-if="ngForm.optionD.$touched">
+            <div ng-message="required">选项D不能为空</div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-md-2 control-label">答案</label>
+    <div class="col-md-9">
+        <select ng-disabled="vm.editable" class="form-control" name="answer" ng-model="vm.showData.test.answer" required>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+        </select>
+        <div class="error" ng-messages="ngForm.answer.$error" ng-if="ngForm.answer.$touched">
+            <div ng-message="required">答案不能为空</div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-md-2 control-label">时长</label>
+    <div class="col-md-9">
+        <select ng-disabled="vm.editable" class="form-control" name="grade" ng-model="vm.showData.test.duration">
+            <option value="3">3s</option>
+            <option value="4">4s</option>
+            <option value="5">5s</option>
+            <option value="6">6s</option>
+            <option value="7">7s</option>
+            <option value="8">8s</option>
+            <option value="9">9s</option>
+            <option value="10">10s</option>
+            <option value="11">11s</option>
+            <option value="12">12s</option>
+        </select>
+    </div>
+</div>

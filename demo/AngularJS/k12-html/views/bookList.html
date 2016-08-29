@@ -1,0 +1,76 @@
+<div class="row pd-top-2">
+    <div class="col-md-12 pd-top-2 pd-bottom-2  panel panel-default">
+        <form class="form-inline form-search" role="form">
+            <div class="form-group col-lg-5 col-lg-offset-1 col-md-11 col-md-offset-1">
+                <label>年级</label>
+                <select class="form-control" ng-model="vm.params.grade">
+                    <option value="">全部</option>
+                    <option value="1">一年级</option>
+                    <option value="2">二年级</option>
+                    <option value="3">三年级</option>
+                    <option value="4">四年级</option>
+                    <option value="5">五年级</option>
+                    <option value="6">六年级</option>
+                </select>
+
+            </div>
+            <div class="col-lg-5 col-md-11 col-md-offset-1">
+                <div class="form-group">
+                    <label class="control-label">教材名称：</label>
+                    <input type="text" class="form-control" ng-model="vm.params.name">
+                </div>
+                <button class="btn btn-primary pull-right" ng-click="vm.search()" style="margin-top: 2%;">查询</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="row">
+        <div class=" col-md-12 ">
+            <div class="  panel panel-default">
+                <div class="panel-heading">
+                    教材管理
+                    <div class="btn-group pull-right">
+                        <div class="btn btn-primary btn-xs" ng-if="globalPermission.created" ui-sref="field.bookDetails">
+                            <i class="fa fa-plus-square fa-fw"></i>
+                            新增
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <ul class="ul-table-head">
+                        <li>
+                            <div class="four1">编号</div>
+                            <div class="four2">教材名称</div>
+                            <div class="four3">年级</div>
+                            <div class="four4">操作</div>
+                        </li>
+                    </ul>
+                    <ul class="ul-table" dnd-list="vm.list">
+                        <li ng-repeat="item in vm.list"
+                            dnd-draggable="item"
+                            dnd-moved="vm.list.splice($index, 1)"
+                            dnd-effect-allowed="move"
+                            dnd-selected="vm.list.selected = item"
+                            ng-class="{'selected': vm.list.selected === item}"
+                        >
+                            <div class="four1">{{$index*1+1}}</div>
+                            <div class="four2">{{item.name}}</div>
+                            <div class="four3">{{item.grade}}</div>
+                            <div class="four4">
+                                <button class="btn btn-default btn-xs" ng-if="!vm.nextLevelBtn" ui-sref="field.unitList({bid:item.id})" ui-sref-opts="{reload: true}">单元管理
+                                </button>
+                                <button class="btn btn-default btn-xs" ui-sref="field.bookDetails({id:item.id,statusa:1})">查看
+                                </button>
+                                <button class="btn btn-default btn-xs" ng-if="globalPermission.updated" ui-sref="field.bookDetails({id:item.id,statusa:0})">编辑
+                                </button>
+                                <button class="btn btn-danger btn-xs" ng-if="globalPermission.deleted" ng-click="vm.del(item.id, $index)">删除</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<paging ng-if="vm.page" next="{{vm.page}}"></paging>
+

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google 桌面通知</title>
+    <meta name="generator" content="editplus" />
+    <meta name="author" content="" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta http-equiv='content-type' content='text/html; charset=utf-8' />
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+
+
+<button id='btn'>显示桌面通知</button>
+<button id='btn2'>测试</button>
+
+<script type='text/javascript'>
+    document.querySelector("#btn").addEventListener('click', notify, false);
+    function notify(title, content) {
+        if(!title && !content){
+            title = "桌面提醒";
+            content = "您看到此条信息桌面提醒设置成功";
+        }
+        var iconUrl = "http://mall.lqxshop.com/theme/default/images/img/logo.jpg";
+        if (window.webkitNotifications) {
+            //chrome老版本
+            if (window.webkitNotifications.checkPermission() == 0) {
+                var notif = window.webkitNotifications.createNotification(iconUrl, title, content);
+                notif.display = function() {}
+                notif.onerror = function() {}
+                notif.onclose = function() {}
+                notif.onclick = function() {this.cancel();}
+                notif.replaceId = 'Meteoric';
+                notif.show();
+            } else {
+                window.webkitNotifications.requestPermission($jy.notify);
+            }
+        }
+        else if("Notification" in window){
+            // 判断是否有权限
+            if (Notification.permission === "granted") {
+                var notification = new Notification("title", {
+                    "icon": iconUrl,
+                    "body": "提醒内容:顾客给您发送了一个消息",
+                });
+                notification.onclick = function(event) {
+                    window.focus()
+                };
+                console.log(notification.renotify);
+                setTimeout(notification.close.bind(notification), 2000);
+
+            }
+            //如果没权限，则请求权限
+            else if (Notification.permission !== 'denied') {
+                Notification.requestPermission(function(permission) {
+                    // Whatever the user answers, we make sure we store the
+                    // information
+                    if (!('permission' in Notification)) {
+                        Notification.permission = permission;
+                    }
+                    //如果接受请求
+                    if (permission === "granted") {
+                        var notification = new Notification(title, {
+                            "icon": iconUrl,
+                            "body": content,
+                        });
+                    }
+                });
+            }
+        }
+    }
+    var int = setInterval(notify,10000);
+    document.querySelector("#btn2").addEventListener('click', test, false);
+    function test(){
+        if(document.activeElement.id !=''){
+            clearInterval(int);
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<div class="row pd-top-2">
+    <div class="col-md-12 pd-top-2 pd-bottom-2  panel panel-default">
+        <form class="form-inline form-search" role="form">
+            <div class="form-group col-md-5  col-md-offset-1">
+                <label>测验类型</label>
+                <select class="form-control" ng-model="vm.params.qtype">
+                    <option value="1">跟读</option>
+                    <option value="2">选择</option>
+                    <option value="3">开放式问答</option>
+                    <option value="">全部</option>
+                </select>
+            </div>
+            <div class="form-group col-md-5  col-md-offset-1">
+                <label>年级</label>
+                <select class="form-control" ng-model="vm.params.grade">
+                    <option value="1">一年级</option>
+                    <option value="2">二年级</option>
+                    <option value="3">三年级</option>
+                    <option value="4">四年级</option>
+                    <option value="5">五年级</option>
+                    <option value="6">六年级</option>
+                    <option value="">全部</option>
+                </select>
+            </div>
+            <div class="form-group col-md-5 col-md-offset-1">
+                <label class="control-label">教材名称</label>
+                <input type="text" class="form-control" ng-model="vm.params.bname">
+            </div>
+            <div class="form-group col-md-5  col-md-offset-1">
+                <label class="control-label">单元名称</label>
+                <input type="text" class="form-control" ng-model="vm.params.uname">
+            </div>
+            <div class="form-group col-md-5 col-md-offset-1">
+                <label class="control-label">课件名称</label>
+                <input type="text" class="form-control" ng-model="vm.params.wname">
+            </div>
+            <div class="form-group col-md-5 col-md-offset-1">
+                <button class="btn btn-primary pull-right" ng-click="vm.search()">查询</button>
+                <button class="btn btn-primary pull-right"
+                        ng-if="vm.hasParent" ng-click="vm.research()" style="margin-right:2%;">重置
+                </button>
+
+            </div>
+
+        </form>
+    </div>
+
+
+    <div class="row">
+        <div class=" col-md-12 ">
+            <div class="  panel panel-default">
+                <div class="panel-heading">
+                    测验管理
+                    <div class="btn-group pull-right" ng-if="vm.params.wid&&globalPermission.created">
+                        <button class="btn btn-primary btn-xs" ui-sref="field.testDetail.word({wid:vm.params.wid,status:1})">
+                            <i class="fa fa-plus-square fa-fw"></i>
+                            新增
+                        </button>
+                    </div>
+                    <div class="btn-group pull-right" ng-if="vm.params.wid&&globalPermission.sorted" style="margin-right: 2%;">
+                        <div class="btn btn-primary btn-xs" ng-click="vm.sort()">
+                            保存排序
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <ul class="ul-table-head">
+                        <li>
+                            <div class="test1">序号</div>
+                            <div class="test2">测验类型</div>
+                            <div class="test3">图片/听力内容</div>
+                            <div class="test4">英文</div>
+                            <div class="test5">翻译</div>
+                            <div class="test6">时长</div>
+                            <div class="test7">操作</div>
+                        </li>
+                    </ul>
+                    <ul class="ul-table" dnd-list="vm.transformList">
+                        <li ng-repeat="item in vm.transformList"
+                            dnd-draggable="item"
+                            dnd-moved="vm.transformList.splice($index, 1)"
+                            dnd-effect-allowed="move"
+                            dnd-selected="vm.transformList.selected = item"
+                            ng-class="{'selected': vm.list.selected === item}"
+                        >
+                            <div class="test1">{{$index*1+1}}</div>
+                            <div class="test2">{{item.type}}</div>
+                            <div class="test3 ellipsis" title="{{item.content}}" compile="item.content" ></div>
+                            <div class="test4 ellipsis" title="{{item.english}}" compile="item.english"></div>
+                            <div class="test5 ellipsis" title="{{item.translation}}" compile="item.translation"></div>
+                            <div class="test6" compile="item.duration"></div>
+                            <div class="test7">
+                                <button class="btn btn-default btn-xs" ng-click="vm.jump(item.type, item.id, 0, vm.params.wid)">查看
+                                </button>
+                                <button class="btn btn-default btn-xs" ng-if="globalPermission.updated" ng-click="vm.jump(item.type, item.id, 1, vm.params.wid)">编辑
+                                </button>
+                                <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal"
+                                    ng-if="globalPermission.deleted"    ng-click="vm.del(item.id, $index)">删除
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <paging ng-if="vm.page" next="{{vm.page}}"></paging>
+</div>

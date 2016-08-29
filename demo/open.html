@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body onload="openwin()">
+<button id='btn3'>open</button>
+</body>
+<script>
+    document.getElementById("btn3").addEventListener('click',openwin,false);
+    function openwin() {
+        window.open ("http://www.baidu.com", "newwindow", "height=100, width=400, toolbar =no, menubar =no, scrollbar s=no, resizable =no, location =no, status= no"); //写成一行
+    }
+</script>
+</html>

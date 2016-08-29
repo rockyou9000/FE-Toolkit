@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>query</title>
+    <style type="text/css">
+    .queryForm{
+      font:14px/20px '微软雅黑',sans-serif ;
+      width:200px;
+      height:80px;
+      float:right;
+      margin-right:100px;
+    }
+    .queryForm legend{
+      position:absolute;
+      font-size: 14px;
+      font-weight: bold;
+      margin-left:5px;
+      margin-top:5px;
+    }
+    .form_wrap{
+      border:1px solid #999;
+      height:100%;
+    }
+    .targetFrame{
+        margin-top:20px;
+    }
+    .ver_line,.form_wrap label{
+        display:inline-block;
+        text-align: center;
+        vertical-align: middle;;
+    }
+    .ver_line {
+        width:1px;
+        height:100%;
+        margin-left:10px;
+    }
+    </style>
+</head>
+<body>
+<div class="os_add_box_con">
+    <form action="#" name="queryLog" method="get" target="targetFrame" class="queryForm">
+        <div class="form_wrap">
+            <legend>查询参数</legend>
+            <div class="ver_line"></div>
+            <label>行
+                <select name="lines" onchange="this.form.submit();">                
+                    <option value="50" selected="">50</option>
+                    <option value="100">100</option>
+                    <option value="250">250</option>
+                    <option value="500">500</option>
+                    <option value="All">全部</option>
+                </select>
+            </label>
+            <label>刷新:
+                <select name="refresh" onchange="this.form.submit();">                
+                    <option value="none" selected="">无</option>
+                    <option value="10">10</option>
+                    <option value="30">30</option>
+                    <option value="60">60</option>
+                    <option value="90">90</option>
+                </select>
+            </label>
+        </div>
+    </form>
+    <iframe src="./iframe.html" name='targetFrame' frameborder="0" width='100%' height="400px" class="targetFrame"></iframe>
+</div>
+</body>
+</html>

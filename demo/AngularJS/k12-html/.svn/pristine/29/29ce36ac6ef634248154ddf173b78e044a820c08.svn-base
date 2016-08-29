@@ -1,0 +1,231 @@
+<div class="form-group">
+    <label  class="col-md-2 control-label">听力内容</label>
+    <div class="col-md-9">
+        <textarea ng-disabled="vm.editable" class="form-control" rows="4" cols="12" ng-model="vm.showData.test.content" name="content" required></textarea>
+        <div class="error" ng-messages="ngForm.content.$error" ng-if="ngForm.content.$touched">
+            <div ng-message="required">听力内容不能为空</div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label  class="col-md-2 control-label">问题</label>
+    <div class="col-md-9">
+        <input ng-disabled="vm.editable" type="text" class="form-control" name="question" ng-model="vm.showData.test.question" required>
+        <div class="error" ng-messages="ngForm.question.$error" ng-if="ngForm.question.$touched">
+            <div ng-message="required">问题不能为空</div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label  class="col-md-2 control-label">问题翻译</label>
+    <div class="col-md-9">
+        <input ng-disabled="vm.editable" type="text" class="form-control" name="translation" ng-model="vm.showData.test.translation" required>
+        <div class="error" ng-messages="ngForm.translation.$error" ng-if="ngForm.translation.$touched">
+            <div ng-message="required">问题翻译不能为空</div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">选项A</label>
+    <img style="width:100px;margin-left:1.6%;" ng-src="{{vm.showData.test.optionA | imgFilter}}">
+    <div class="col-sm-10 col-sm-offset-2">
+        <label ng-if="!vm.editable" class="btn btn-default" for="fileA">上传文件</label>
+        <input ng-disabled="vm.editable" id="fileA" style="display: none" type="file" nv-file-select uploader="vm.uploaderA" accept=".jpg,.png,.jpeg,.gif"/>
+        <table class="table text-center" ng-show="vm.uploaderA.queue.length">
+            <thead>
+            <tr>
+                <th class="text-center" width="50%">文件名</th>
+                <th class="text-center" ng-show="vm.uploaderA.isHTML5">大小</th>
+                <th class="text-center"  ng-show="vm.uploaderA.isHTML5">进度</th>
+                <th class="text-center" >状态</th>
+                <th class="text-center" >操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in vm.uploaderA.queue" class="ng-scope" ng-if="$first">
+                <td><strong class="ng-binding">{{item.file.name}}</strong></td>
+                <td ng-show="vm.uploaderA.isHTML5" nowrap="" class="ng-binding">{{ item.file.size/1024/1024 | number:2 }} MB</td>
+                <td ng-show="vm.uploaderA.isHTML5">
+                    <div class="progress" style="margin-bottom: 0;">
+                        <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                    </div>
+                </td>
+                <td class="text-center">
+                    <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                    <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                    <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                </td>
+                <td nowrap="">
+                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                        <span class="glyphicon glyphicon-upload"></span> 上传
+                    </button>
+                    <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove(); vm.clearImg()">
+                        <span class="glyphicon glyphicon-trash"></span> 删除
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">选项B</label>
+    <img style="width:100px;margin-left:1.6%;" ng-src="{{vm.showData.test.optionB | imgFilter}}">
+    <div class="col-sm-10 col-sm-offset-2">
+        <label ng-if="!vm.editable" class="btn btn-default" for="fileB">上传文件</label>
+        <input ng-disabled="vm.editable" id="fileB" style="display: none" type="file" nv-file-select uploader="vm.uploaderB" accept=".jpg,.png,.jpeg,.gif"/>
+        <table class="table text-center" ng-show="vm.uploaderB.queue.length">
+            <thead>
+            <tr>
+                <th class="text-center" width="50%">文件名</th>
+                <th class="text-center" ng-show="vm.uploaderB.isHTML5">大小</th>
+                <th class="text-center"  ng-show="vm.uploaderB.isHTML5">进度</th>
+                <th class="text-center" >状态</th>
+                <th class="text-center" >操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in vm.uploaderB.queue" class="ng-scope" ng-if="$first">
+                <td><strong class="ng-binding">{{item.file.name}}</strong></td>
+                <td ng-show="vm.uploaderB.isHTML5" nowrap="" class="ng-binding">{{ item.file.size/1024/1024 | number:2 }} MB</td>
+                <td ng-show="vm.uploaderB.isHTML5">
+                    <div class="progress" style="margin-bottom: 0;">
+                        <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                    </div>
+                </td>
+                <td class="text-center">
+                    <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                    <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                    <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                </td>
+                <td nowrap="">
+                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                        <span class="glyphicon glyphicon-upload"></span> 上传
+                    </button>
+                    <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove(); vm.clearImg()">
+                        <span class="glyphicon glyphicon-trash"></span> 删除
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">选项C</label>
+    <img style="width:100px;margin-left:1.6%;" ng-src="{{vm.showData.test.optionC | imgFilter}}">
+    <div class="col-sm-10 col-sm-offset-2">
+        <label ng-if="!vm.editable" class="btn btn-default" for="fileC">上传文件</label>
+        <input ng-disabled="vm.editable" id="fileC" style="display: none" type="file" nv-file-select uploader="vm.uploaderC" accept=".jpg,.png,.jpeg,.gif"/>
+        <table class="table text-center" ng-show="vm.uploaderC.queue.length">
+            <thead>
+            <tr>
+                <th class="text-center" width="50%">文件名</th>
+                <th class="text-center" ng-show="vm.uploaderC.isHTML5">大小</th>
+                <th class="text-center"  ng-show="vm.uploaderC.isHTML5">进度</th>
+                <th class="text-center" >状态</th>
+                <th class="text-center" >操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in vm.uploaderC.queue" class="ng-scope" ng-if="$first">
+                <td><strong class="ng-binding">{{item.file.name}}</strong></td>
+                <td ng-show="vm.uploader.isHTML5" nowrap="" class="ng-binding">{{ item.file.size/1024/1024 | number:2 }} MB</td>
+                <td ng-show="vm.uploader.isHTML5">
+                    <div class="progress" style="margin-bottom: 0;">
+                        <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                    </div>
+                </td>
+                <td class="text-center">
+                    <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                    <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                    <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                </td>
+                <td nowrap="">
+                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                        <span class="glyphicon glyphicon-upload"></span> 上传
+                    </button>
+                    <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove(); vm.clearImg()">
+                        <span class="glyphicon glyphicon-trash"></span> 删除
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="form-group">
+    <label class="col-sm-2 control-label">选项D</label>
+    <img style="width:100px;margin-left:1.6%;" ng-src="{{vm.showData.test.optionD | imgFilter}}">
+    <div class="col-sm-10 col-sm-offset-2">
+        <label ng-if="!vm.editable" class="btn btn-default" for="fileD">上传文件</label>
+        <input ng-disabled="vm.editable" id="fileD" style="display: none" type="file" nv-file-select uploader="vm.uploaderD" accept=".jpg,.png,.jpeg,.gif"/>
+        <table class="table text-center" ng-show="vm.uploaderD.queue.length">
+            <thead>
+            <tr>
+                <th class="text-center" width="50%">文件名</th>
+                <th class="text-center" ng-show="vm.uploaderD.isHTML5">大小</th>
+                <th class="text-center"  ng-show="vm.uploaderD.isHTML5">进度</th>
+                <th class="text-center" >状态</th>
+                <th class="text-center" >操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in vm.uploaderD.queue" class="ng-scope" ng-if="$first">
+                <td><strong class="ng-binding">{{item.file.name}}</strong></td>
+                <td ng-show="vm.uploaderD.isHTML5" nowrap="" class="ng-binding">{{ item.file.size/1024/1024 | number:2 }} MB</td>
+                <td ng-show="vm.uploaderD.isHTML5">
+                    <div class="progress" style="margin-bottom: 0;">
+                        <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                    </div>
+                </td>
+                <td class="text-center">
+                    <span ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                    <span ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                    <span ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                </td>
+                <td nowrap="">
+                    <button type="button" class="btn btn-success btn-xs" ng-click="item.upload()" ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                        <span class="glyphicon glyphicon-upload"></span> 上传
+                    </button>
+                    <button type="button" class="btn btn-danger btn-xs" ng-click="item.remove(); vm.clearImg()">
+                        <span class="glyphicon glyphicon-trash"></span> 删除
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="form-group">
+    <label  class="col-md-2 control-label">答案</label>
+    <div class="col-md-9">
+        <select ng-disabled="vm.editable" class="form-control"  ng-model="vm.showData.test.answer" name="answer" required>
+            <option value="1">A</option>
+            <option value="2">B</option>
+            <option value="3">C</option>
+            <option value="4">D</option>
+        </select>
+        <div class="error" ng-messages="ngForm.answer.$error" ng-if="ngForm.answer.$touched">
+            <div ng-message="required">答案不能为空</div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <label  class="col-md-2 control-label">时长</label>
+    <div class="col-md-9">
+        <select ng-disabled="vm.editable" class="form-control"  ng-model="vm.showData.test.duration">
+            <option value="3">3s</option>
+            <option value="4">4s</option>
+            <option value="5">5s</option>
+            <option value="6">6s</option>
+            <option value="7">7s</option>
+            <option value="8">8s</option>
+            <option value="9">9s</option>
+            <option value="10">10s</option>
+            <option value="11">11s</option>
+            <option value="12">12s</option>
+        </select>
+    </div>
+</div>

@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+<style>
+.popuparea{
+	width:600px;
+	height:400px;
+	box-shadow:3px 3px 3px #dddddd;
+	-moz-box-shadow: 0px 3px 5px #888888;
+	box-shadow: 0px 3px 5px #888888;
+	position:absolute;
+	z-index:999999999;
+	background-color:#ffffff;
+}
+.popuparea .inner{
+	width:100%;
+	height:100%;
+	position:relative;
+	padding-top:35px;
+	padding-bottom:50px;	
+}
+
+.popuparea .inner .bottomarea{
+	border-top:solid 1px #ccc;
+	background-color:#ffffff;
+	height:40px;
+	line-height:40px;
+	position:absolute;
+	bottom:85px;
+	width:100%;
+	text-align:right;
+}
+.popuparea .bottomarea .spanm{
+	margin-right:15px;
+}
+.popuparea .bottomarea span{
+	font-size:14px;
+	cursor:pointer;
+	color:rgb(40, 138, 221);
+	border:solid 1px #cccccc;
+	padding:3px 10px;
+	border-radius:5px;
+}
+
+.maskfrm{
+	z-index:11; 
+	position:absolute;
+	left:0px;
+	top:0px; width:100%;
+	height:100%; opacity:0.5; background-color:#000000; display:none;
+}
+</style>
+<input class="btn222222" type="button" value="2222222222"/>
+<input class="btn2" type="button" value="2"/>
+<div class="maskfrm" style=""></div>
+<div class="popuparea" style="display:none;">
+	<div class="inner">
+        <div class="bottomarea">
+                <span class="popupConfirm">确定</span>
+                <span class="popupClose" class="spanm">取消</span>
+        </div>
+    </div>
+</div>
+<Script type="text/javascript">
+//added by maowei on 20160527 弹出框插件
+;(function($){
+	$.extend($.fn,{
+		PopupChange:function(options){
+		//added by maowei on 20160527 插件属性
+		var setting = $.extend({
+			openElement:"",
+			closeElement:"",
+			confirmElement:""
+		},options||{});
+		
+		/***start***/
+		var thisF = {
+			popup:function(popupName,maskName){
+				var _windowHeight = $(window).height(),//获取当前窗口高度
+				_windowWidth = $(window).width(),//获取当前窗口宽度
+				_popupHeight = popupName.height(),//获取弹出层高度
+				_popupWeight = popupName.width();//获取弹出层宽度
+				_posiTop = (_windowHeight - _popupHeight)/2;
+				//_posiTop = 100;
+				_posiLeft = (_windowWidth - _popupWeight)/2;
+				popupName.css({"left": _posiLeft + "px","top":_posiTop + "px","display":"block"});//设置position
+				maskName.show();
+			},
+		
+			popupclose:function(popupName,maskName){
+				popupName.hide();
+				maskName.hide();
+			}
+		}
+		/***end***/
+			
+		$(""+setting.openElement+"").on("click", function(){
+			thisF.popup($(".popuparea"),$(".maskfrm"));
+			$(""+setting.confirmElement+"").attr("kfvalue","");
+		});
+			
+		$(""+setting.closeElement+"").on("click", function(){
+			thisF.popupclose($(".popuparea"),$(".maskfrm"));
+		});
+		
+		$(".maskfrm").on("click",function(){
+			thisF.popupclose($(".popuparea"),$(".maskfrm"));
+		});
+
+		}
+	});	
+})(jQuery);
+
+</script>
+<script>
+/*
+window.onload = function(){
+	$(this).click().PopupChange({
+	   openElement:".btn2",//
+	   closeElement:".popupClose",//POPUP取消
+	   confirmElement:".popupConfirm"//弹出框确认
+   })	
+}*/
+
+
+$(".popuparea").PopupChange({
+	   openElement:".btn2",//	
+	   closeElement:".popupClose",//POPUP取消
+	   confirmElement:".popupConfirm"//弹出框确认
+   })	
+
+
+</script>
+<input id="thisValue" style="width:200px; height:40px;" type="text" />
+</body>
+</html> 

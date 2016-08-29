@@ -1,0 +1,53 @@
+<div class="row pd-top-2">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            丨&nbsp课件管理
+        </div>
+        <div class="panel-body" style="border:1px solid #858585; margin: 2%;">
+            <form role="form" class="form-horizontal" name="ngForm" novalidate>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">年级</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" disabled ng-model="vm.params.grade">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">教材</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" disabled ng-model="vm.params.bname">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">单元名称</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" disabled ng-model="vm.params.uname">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label">课件名称</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" ng-disabled="vm.noedit" name="name" placeholder="请输入"
+                               ng-model="vm.params.wname" required>
+                    </div>
+                    <div class="error" ng-messages="ngForm.name.$error" ng-if="ngForm.name.$touched">
+                        <div ng-message="required">课件名不能为空</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-2">
+                        <button class="btn btn-success btn-sm" ng-if="vm.status==2" ng-click="vm.update()" ng-disabled="ngForm.$invalid">保存</button>
+                        <button class="btn btn-success btn-sm" ng-if="vm.status==1&&globalPermission.updated" ng-click="vm.edit()">编辑</button>
+                        <button class="btn btn-success btn-sm" ng-if="vm.status==3" ng-click="vm.add()" ng-disabled="ngForm.$invalid">新增</button>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-default btn-sm" ng-if="vm.status==2||vm.status==3"
+                                ng-click="vm.cancel()">取消
+                        </button>
+                        <button class="btn btn-default btn-sm" ng-if="vm.status==1" ng-click="vm.cancel()">返回</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

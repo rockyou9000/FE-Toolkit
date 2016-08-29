@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<style type="text/css" media="screen">
+		select{text-align: center;width:200px;}
+		option{text-align: center;}
+		#abc{width:200px;height:200px;background: red;}
+	</style>
+</head>
+<body>
+	<div class="a b  c   e f" id="test"></div>
+    <input type="color"></input>
+    Webpage: <input type="url" list="url_list" name="link" />
+<datalist id="url_list">
+<option label="W3School" value="http://www.W3School.com.cn" />
+<option label="Google" value="http://www.google.com" />
+<option label="Microsoft" value="http://www.microsoft.com" />
+</datalist>
+</body>
+
+<script>
+	function hasClass(obj, cls) {
+	         return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
+	        }
+    function addClass(obj, cls) {
+        if (!this.hasClass(obj, cls)) obj.className += " " + cls;
+    }
+    function removeClass(obj, cls) {
+        if (hasClass(obj, cls)) {
+            var reg = new RegExp('(\\s|^)' + cls + '(\\s|$)');
+            obj.className = obj.className.replace(reg, ' ');
+        }
+    }
+
+    (function(){
+    	var test = document.getElementById('test');
+    	removeClass(test,'e');
+    	removeClass(test,'a');
+    	addClass(test,'e');
+    	addClass(test,'a');
+    	addClass(test,'a');
+    	addClass(test,'a');
+    	addClass(test,'a');
+    }())
+</script>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js" type="text/javascript"></script>
+</head>
+<style>
+    ul{
+        list-style: none;
+    }
+    #scrollPics{
+        height: 625px;
+        width: 100%;
+        margin-bottom: 10px;
+        overflow: hidden;
+        position:relative;
+    }
+    .num{
+        position:absolute;
+        right:50px;
+        bottom:5px;
+    }
+    #scrollPics .num li{
+        float: left;
+        color: #FF7300;
+        text-align: center;
+        line-height: 16px;
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+        overflow: hidden;
+        margin: 3px 1px;
+        border: 1px solid #FF7300;
+        background-color: #fff;
+    }
+    #scrollPics .num .on{
+        color: #fff;
+        line-height: 21px;
+        width: 21px;
+        height: 21px;
+        font-size: 16px;
+        margin: 0 1px;
+        border: 0;
+        background-color: #FF7300;
+        font-weight: bold;
+    }
+    .btn{
+        position: absolute;
+        top:50px;
+        right:50px;
+    }
+    .btn div{
+        width:50px;
+        height:50px;
+        background: red;
+    }
+</style>
+<script>
+    $(function(){
+        //滚动广告
+        var len = $(".num > li").length;
+        var index = 0;  //图片序号
+        var adTimer;
+        $(".num li").mouseover(function() {
+            index = $(".num li").index(this);  //获取鼠标悬浮 li 的index
+            showImg(index);
+        }).eq(0).mouseover();
+
+        //滑入停止动画，滑出开始动画.
+        $('#scrollPics').hover(function() {
+            clearInterval(adTimer);
+        }, function() {
+            adTimer = setInterval(function() {
+                showImg(index);
+                index++;
+                if (index == len) {       //最后一张图片之后，转到第一张
+                    index = 0;
+                }
+            }, 2000);
+        }).trigger("mouseleave");
+
+        function showImg(index) {
+            var adHeight = $("#scrollPics>ul>li:first").height();
+            $(".slider").stop(true, false).animate({
+                "marginTop": -adHeight * index + "px"    //改变 marginTop 属性的值达到轮播的效果
+            }, 1000);
+            $(".num li").removeClass("on")
+                    .eq(index).addClass("on");
+        }
+
+        $(".btn .pre").click(function(){
+            var indexNow = --index;
+            if (indexNow < 0){
+                indexNow = len-1;
+            }
+            showImg(indexNow);
+            index = indexNow;
+        });
+
+        $(".btn .next").click(function(){
+            var indexNow2 = ++index;
+            if (indexNow2 == len){      //必须是 ==  不能是= 否则等式永远成立
+                indexNow2 = 0;
+            }
+            showImg(indexNow2);
+            index = indexNow2;
+        })
+
+    })
+
+
+</script>
+<body>
+<div id="scrollPics">
+    <ul class="slider">
+        <li><img src="1.jpg"></li>
+        <li><img src="2.jpg"></li>
+        <li><img src="3.jpg"></li>
+    </ul>
+    <ul class="num" >
+        <li class="on">1</li>
+        <li>2</li>
+        <li>3</li>
+    </ul>
+    <div class="btn">
+        <div class="pre">前</div>
+        <div class="next">后</div>
+    </div>
+</div>
+</body>
+</html>

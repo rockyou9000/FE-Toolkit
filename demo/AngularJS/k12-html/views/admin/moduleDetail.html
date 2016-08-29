@@ -1,0 +1,66 @@
+<div class="row pd-top-2">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                模块编辑
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label for="name" class="col-sm-2 control-label">名称*</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="name" placeholder="name" ng-model="vm.data.name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="menuId" class="col-sm-2 control-label">父节点ID</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="parentID" placeholder="parentID" ng-model="vm.data.parentID">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="menuId" class="col-sm-2 control-label">MenuId</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="menuId" placeholder="MenuId" ng-model="vm.data.menuID">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="url" class="col-sm-2 control-label">URL地址</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="url" placeholder="url" ng-model="vm.data.url">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="type" class="col-sm-2 control-label">模块类别</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="type" placeholder="module type" ng-model="vm.data.type">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="type" class="col-sm-2 control-label">icon</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="icon" placeholder="icon class" ng-model="vm.data.icon">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="type" class="col-sm-2 control-label">顺序</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="level" placeholder="icon class" ng-model="vm.data.level">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-10">
+                        <button class="btn btn-success" ng-click="vm.saveOrUpdate()">保存</button>
+                        <button class="btn btn-danger" ui-sref="field.module">取消</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
