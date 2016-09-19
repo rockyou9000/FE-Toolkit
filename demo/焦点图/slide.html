@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+	<head>
+		<meta charset="utf-8">
+		<style type="text/css">
+			*{
+				list-style: none;
+				margin:0;
+				padding: 0;
+			}
+
+			.clearfix:after{
+				height: 0;
+				display: block;
+				visibility: hidden;
+				content: ".";
+				clear:both;
+			}
+
+			.slider{
+				width: 800px;
+				height: 280px;
+				overflow: hidden;
+				position: relative;
+			}
+
+			.slider_pic li{
+				width: 800px;
+				height: 280px;
+			}
+
+			.slider_num{
+				position: absolute;
+				left: 80%;
+				bottom: 10%;	
+			}
+
+			.slider_num ul li{
+				float:left;
+				width: 20px;
+				height:20px;	
+				line-height: 20px;
+				text-align: center;
+				border-radius: 10px;
+				background: #999;
+				margin-right:5px;	
+				cursor: pointer;	
+			}
+
+			.slider_num ul .seled{
+				background: red;
+			}
+		</style>
+		<script type="text/javascript" src="jquery-1.11.1.js"></script>	
+		<script type="text/javascript" src="jQuery.slider.js"></script>
+		<script>
+			$(function(){
+				$('.slider').slider({type:3,time:1000});
+			})
+		</script>
+	</head>
+	<body>
+		<div class="slider">	
+			<ul class="slider_pic clearfix">
+				<li><img src="images./01.jpg"></li>
+				<li><img src="images./02.jpg"></li>
+				<li><img src="images./03.jpg"></li>
+				<li><img src="images./04.jpg"></li>
+				<li><img src="images./05.jpg"></li>
+			</ul>
+		</div>
+	</body>
+</html>
