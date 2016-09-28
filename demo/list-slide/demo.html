@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+	<title>Demo</title>
+	<link rel="stylesheet" type="text/css" href="slide-list.css">
+	<style>
+		*{margin:0;padding:0;}
+	</style>
+</head>
+<body>
+	<!-- 结构1 -->
+	<ul class="slide_list_ul slide_container">
+		<li class="slide_list_li"><div class="slide_list_text">我可以左滑</div></li>
+		<li class="slide_list_li"><div class="slide_list_text">我可以左滑</div></li>
+	</ul>
+	<!-- 结构1 -->
+
+	<!-- 结构2 -->
+	<ul class="slide_list_ul slide_container">
+		<li class="slide_list_li"><div class="slide_list_text">我可以右滑</div></li>
+		<li class="slide_list_li"><div class="slide_list_text">我可以右滑</div></li>
+		<li class="slide_list_li"><div class="slide_list_text">我可以右滑</div></li>
+	</ul>
+	<!-- 结构2 -->
+
+	<!-- 依赖的js文件 -->
+	<script src="util.js"></script>
+	<script src="slide-list.js"></script>
+	<script>
+		//实例化slide_list 
+		var slide_list = new Slide_list({
+			//1.按钮配置(最大数量为2)
+			  btn:['删除','编辑'], //按钮显示文字
+			  bgColor:['red','#000'], //按钮背景颜色
+			  color:['#fff','#fff'], //按钮文字颜色
+			  width:[50,80], //按钮宽度
+			//2.滑动方式
+			  style:'left', //目前仅支持左滑和右滑
+		})
+
+		//配置按钮点击回调函数
+		slide_list.on('btn1',function(){
+			alert('点击btn1')
+		})
+
+		slide_list.on('btn2',function(){
+			alert('点击btn2')
+		})
+
+
+		//实例化slide_list 
+		var slide_list2 = new Slide_list({
+			//1.按钮配置(最大数量为2)
+			  btn:['删除'], //按钮显示文字
+			  bgColor:['red'], //按钮背景颜色
+			  color:['#fff'], //按钮文字颜色
+			  width:[50], //按钮宽度
+			//2.滑动方式
+			  style:'right', //目前仅支持左滑和右滑
+		})
+
+		//配置按钮点击回调函数
+		slide_list2.on('btn1',function(){
+			alert('点击btn1xxx')
+		})
+
+		slide_list2.on('btn2',function(){
+			alert('点击btn2xxx')
+		})
+	</script>
+</body>
+</html>
