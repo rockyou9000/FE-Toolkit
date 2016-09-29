@@ -15,7 +15,7 @@
 		this.width = options.width || [50];
 		this.btn_all_width = eval(this.width.join('+'));
 		this.style = options.style || 'right';
-		// console.log('----btn_all_width-----',this.btn_all_width)
+		if(sl_debugger)console.log('----btn_all_width-----',this.btn_all_width)
 
 		if(options.btn == undefined || options.btn.length>=3 ){
 				if(sl_debugger) throw Error('按钮数量不符合要求!')
@@ -33,7 +33,7 @@
 		//创建按钮template
 	    _initTemplate:function(style,num){
 	    	if(style === undefined ||num === undefined) return;
-	    	console.log('-----this-----',this)
+	    	if(sl_debugger)console.log('-----this-----',this)
 	    		if(num == 1){
 			    	var btn_html = '<div class="slide_list_btn_'+style+'" data-status = "0" >\
 								    	<span class="list_btn btn1" style="color:'+this.color[0]+';background:'+this.bgColor[0]+';width:'+this.width[0]+'px">'+this.btn[0]+'</span>\
@@ -75,11 +75,11 @@
 	    	}
 	    },
 	    _onBtn1:function(){
-	    	console.log('btn1')
+	    	if(sl_debugger)console.log('btn1')
 	    	this.emit('btn1');
 	    },
 	    _onBtn2:function(){
-	 		console.log('btn2')
+	 		if(sl_debugger)console.log('btn2')
 	    	this.emit('btn2');
 	    },
 		//拖动相关 初始化绑定事件
@@ -93,7 +93,6 @@
 	    },
 	    //touch事件开始回调
 	    _dragstart:function(event){
-	    	event.preventDefault(); // 必须有,否则会有奇怪的不明移动
 	    	var touch = event.touches[0];//选择第一个触摸点
 	    	this.touch_start = parseInt(touch.clientX);
 	    	this.d_target = event.currentTarget.querySelector('.slide_list_text');
@@ -106,7 +105,7 @@
 	    		var touch = event.touches[0];
 		    	this.touch_end = parseInt(touch.clientX);
 		    	var moveX = this.touch_end - this.touch_start;
-		    	console.log(moveX)
+		    	if(sl_debugger)console.log(moveX)
 
 		    	//根据style配置 锁定其他滑动方向
 		    	if(this.style =="left" && moveX<0 &&this.d_target_btn.dataset.status == 0 )return; 
@@ -129,11 +128,10 @@
 	    },
 	    //touch事件结束回调
 	    _dragend:function(event){
-	    	event.preventDefault(); // 必须有,否则会有奇怪的不明移动
 	    	var endX = this.touch_end - this.touch_start;
 
-	    	if(this.style =="left" && endX<0 && this.d_target_btn.dataset.status == 0 )return;
-		    if(this.style =="right" && endX>0 && this.d_target_btn.dataset.status == 0 )return;
+	    	if(this.style =="left" && endX<=0 && this.d_target_btn.dataset.status == 0 )return;
+		    if(this.style =="right" && endX>=0 && this.d_target_btn.dataset.status == 0 )return;
 
 	    		if(Math.abs(endX) >= this.btn_all_width){ //当滑动距离超出按钮露出距离时,松开后按钮停留在界面中,否则按钮隐藏到界面外
 		    		if(endX>0 && this.d_target_btn.dataset.status == 0){
