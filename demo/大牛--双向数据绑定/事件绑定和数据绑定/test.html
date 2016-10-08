@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="tephone=no,email=no,date=no,address=no">
+    <title></title>
+</head>
+
+<body>
+
+    <!-- b属性表示双向绑定一个节点的html值或者value -->
+    <!-- 单个冒号表示事件，默认只激活了click，input，blur和focus -->
+    <input b='text' :input='log(123)' :change='log.change("change")'>
+    
+    <!-- 值里面用冒号开头表示绑定一个字符串模板 -->
+    <div b=':value：{text}' :::click=':alert("{text}")'></div>
+
+
+
+
+<script src='s.js'></script>
+<script>
+
+    // 启用全局数据绑定
+    var bd=$.bind({
+        // 初始化默认值，如果没写则默认值为空字符串
+        text : '456789'
+    })
+
+    // 修改bd.text
+    bd.text=789
+
+
+    // 激活change事件
+    $.bindEvent('change')
+
+
+    // log事件
+    eve.log=function (e,number){
+        //console.log(e , this , number)
+        console.log(bd.text)
+
+        //修改事件
+        if(bd.text.length>10){
+            // 修改属性就是修改事件
+            this.setAttribute(':change','log.change("change");log.toRed')
+        }
+    }
+
+    eve.log.change=function (e,str){
+        console.log(str)
+    }
+
+    eve.log.toRed=function (){
+        this.style.color='red'
+    }
+    
+    eve.alert=function (e,str){
+        alert(str)
+    }
+
+</script>
+</body>
+</html>

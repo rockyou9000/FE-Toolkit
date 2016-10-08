@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<meta content="black" name="apple-mobile-web-app-status-bar-style">
+	<meta content="telephone=no" name="format-detection">
+	<meta content="email=no" name="format-detection">
+	<title>幸运大抽奖-林清轩</title>
+	<style type="text/css">
+	*{padding:0;margin:0;border:0;}
+	ul,li,ol{list-style-type:none;}
+	body{background-color:#e6284a;}
+	.fl{float:left;}
+	.fr{float:right;}
+	.p_rel{position:relative;}
+	.p_abs{position:absolute;}
+	.clearfix:after{clear:both;content:".";display:block;height:0;visibility:hidden;}
+	.clearfix{zoom:1;}
+	/*#lottery{width:574px;height:584px;margin:20px auto 0;background:url(images/bg.jpg) no-repeat;padding:50px 55px;}*/
+/*#lottery  td{width:142px;height:142px;text-align:center;vertical-align:middle;font-size:24px;color:#333;font-index:-999}*/
+/*#lottery  td a{width:284px;height:284px;line-height:150px;display:block;text-decoration:none;}*/
+/*#lottery  td.active{background-color:#ea0000;}*/
+	img{width:100%;vertical-align:middle;}
+	.m_lottery_con{min-height:328px;padding-top:42%;background:url("images/lottery_bg.jpg") center top no-repeat;background-size:cover;}
+	.lottery-wrap{width:82%;background-color:#000;margin:0 8%;padding:1%;-webkit-border-radius:10px;border-radius:10px;}
+	.lottery-wrap td{width:33%;position:relative;display:inline-block;/*-webkit-filter: brightness(0.5);-moz-filter: brightness(0.5);-o-filter: brightness(0.5);-ms-filter: brightness(0.5);filter: brightness(0.5);*/ }
+	.lottery_shadow{position:absolute;background: rgba(0,0,0,0.4);width:100%;height:100%;}
+/*	.lottery-wrap td.active{-webkit-filter: brightness(1);-moz-filter: brightness(1);-o-filter: brightness(1);-ms-filter: brightness(1);filter: brightness(1);}*/
+	.lottery_desc{width:82%;padding:20px 9%;font:12px/18px '微软雅黑';color:#FFF;}
+	.lottery_desc a{color:#FFF;font-size:15px;font-weight:bold;text-decoration:underline;}
+	.flex-auto{display: -webkit-box;display: -ms-flexbox;display: -webkit-flex;display: flex;}
+	.flex-e2{-webkit-box-flex: 2;-ms-flex: 2;-webkit-flex: 2;flex: 2;}
+	.flex-e1{width:70px;text-align:center;}
+	.lottery_tip_con{background-color:rgba(0,0,0,0.7);width:84%;margin:10px auto;height:36px;-webkit-border-radius:5px;border-radius:5px;text-align:center;font:14px/36px '微软雅黑';color:#FFF;}
+	.award_money{height:30px;width:50px;left:50%;top:50%;margin-top:5px;margin-left:-25px;color:#FFF;font:18px/20px 'verdana';position:absolute;z-index:3;}
+	.lottery_pup_layer{width:280px;height:168px;background:#fbe462 url("images/pup_layer_bg.png") center center no-repeat;background-size:280px 168px;margin:0 auto;-webkit-border-radius:10px;border-radius:10px;}
+	 .pup_l_close{right:-15px;top:-15px;width:40px;height:40px;}
+	.lottery_win_tip{width:220px;margin:0 auto;padding-top:25px;}
+	.lottery_win{display:block;width:220px;height:40px;background:url("images/win_lottery_bg.png") center center no-repeat;background-size:220px 40px;text-align:center;font:bold 20px/40px '微软雅黑';color:#FFF;}
+	.lottery_wrap{width:84%;margin:35px auto 0;}
+   .lottery_view{width:40%;display:inline-block;height:36px;line-height:36px;text-align:center;border:1px solid #e57505;background-color:#fd8f22;-webkit-border-radius:5px;border-radius:5px;}
+	.lottery_view a{color:#FFF;text-decoration:none;font:bold 16px/36px '微软雅黑'}
+	.lottery_l4{margin-left:4%;}
+	</style>
+</head>
+<body>
+<div class="wrap">
+<div class="m_lottery_con">
+	<div class="lottery_tip_con">您今天还有1次抽奖机会！</div>
+	<div class="lottery-wrap">
+		<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" id="lottery">
+			<tr>
+				<td><p class="lottery_shadow"></p><img src="images/lqx_light_award.png"></td>
+				<td><p class="lottery_shadow"></p><img src="images/lqx_light_award.png"></td>
+				<td><p class="lottery_shadow"></p><img src="images/lqx_light_award.png"></td>
+			</tr>
+			<tr>
+				<td><p class="lottery_shadow"></p><img src="images/lqx_light_award.png"></td>
+				<td class="active"><img src="images/award_btn.png" id="fierceClick"/></td>
+				<td><p class="lottery_shadow"></p><img src="images/lqx_light_award.png"></td>
+			</tr>
+			<tr>
+				<td><p class="lottery_shadow"></p><img src="images/lqx_light_award.png"></td>
+				<td><p class="lottery_shadow"></p><img src="images/lqx_light_award.png"></td>
+				<td><p class="lottery_shadow"></p><img src="images/lqx_light_award.png"></td>
+			</tr>
+		</table>
+	</div>
+	<div class="lottery_desc">
+		<ul class="flex-auto">
+			<li class="flex-e2">1.活动有效时间:2015.4.23 19:00 至 2015.4.24 19:00<br/>2.发行方:林清轩生物科技有限公司</li>
+			<li class="flex-e1"><a href="#">查看奖品</a></li>
+		</ul>
+	</div>
+</div>
+</div>
+<script type="text/javascript" src="zepto.min.js"></script>
+<script type="text/javascript" src="lottery.js"></script>
+<script type="text/javascript" src="layer.m.dev.js"></script>
+<script type="text/javascript">
+Zepto('#fierceClick').on('click',function(){
+	lottery.init({
+		startCallback : function(){
+			Zepto('.lottery_tip_con').html('抽奖进行中，不能重复抽取，请稍等...');
+			setTimeout(function(){
+				Zepto('.lottery_tip_con').html('');
+			},1000);
+		},
+		endCallback : function(){
+			//console.log(this.arr[this.index]);
+			var oSelectTd = this.tb.rows[this.arr[this.index][0]].cells[this.arr[this.index][1]];
+			oSelectTd.firstChild.className = '';
+			oSelectTd.innerHTML = '<div><p class="award_money">￥ 9.8</p><p><img src="images/lqx_num_award.png"></p></div>';
+			var winLotteryPage = layer.open({
+				type: 1, //1代表页面层
+				shade:true,
+				shadeClose : false,
+				content: '<div class="lottery_pup_layer p_rel">' +
+						'<p class="pup_l_close p_abs"><img src="images/pup_layer_close.png"></p>' +
+						'<p class="lottery_win_tip"><span class="lottery_win">恭喜您中了￥9.8</span></p>' +
+						'<div class="lottery_wrap"><p class="lottery_view"><a href="#">立即使用</a></p><p class="lottery_view lottery_l4"><a href="#">中奖信息</a></p></div>' +
+						'</div>',
+				style : 'background-color:none',
+				success: function(){
+					Zepto('.pup_l_close').on('click',function(){
+						layer.close(winLotteryPage);
+//                        oSelectTd.firstChild.className = 'lottery_shadow';
+						oSelectTd.innerHTML = '<p class="lottery_shadow"></p><img src="images/lqx_light_award.png">';
+					});
+					Zepto('.lottery_view').on('click',function(){
+						layer.close(winLotteryPage);
+						window.location.href="#";
+					})
+				}
+			});
+		}
+	});
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-cn" class="no-js">
+	<head>
+		<meta http-equiv="Content-Type">
+		<meta content="text/html; charset=utf-8">
+		<meta charset="utf-8">
+		<title>“姜”爱带回家</title>
+		<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="email=no">
+		<link rel="stylesheet" type="text/css" href="css/reset.css" />
+		<link rel="stylesheet" type="text/css" href="css/index.css?t=201402061028" />
+		<link rel="stylesheet" type="text/css" href="css/animations.css" />
+        <link rel="stylesheet" type="text/css" href="css/load.css" />
+	</head>
+	<body>
+    <!-- <div id="loading">
+     	<div class="spinner">
+  			<div class="double-bounce1"></div>
+  			<div class="double-bounce2"></div>
+		</div>
+	</div> -->
+	<div id="content">
+		<div class="page page-1-1 page-current">
+			<div class="wrap">
+				<img class="img-1-1 pt-page-moveFromLeft pt-page-delay1000" src="img/g-h-text1.png" />
+				<img class="img_6 pt-page-moveIconUp" src="img/icon_up.png" />
+			</div>
+		</div>
+		<div class="page page-2-1 hide">
+			<div class="wrap">
+			    <img class="img-2-1 pt-page-moveFromRight" src="img/g-h-text2.png" />
+			    <img class="img_6 pt-page-moveIconUp" src="img/icon_up.png" />
+			</div>
+		</div>
+		<div class="page page-3-1 hide">
+			<div class="wrap">
+			    <img class="img-3-1 pt-page-moveFromLeft" src="img/g-h-text3.png" />
+				<img class="img_6 pt-page-moveIconUp" src="img/icon_up.png" />
+			</div>
+		</div>
+		<div class="page page-4-1 hide">
+			<div class="wrap">
+				<img class="img-4-1 pt-page-moveFromBottomFade" src="img/g-h-text4.png" />
+				<img class="img_6 pt-page-moveIconUp" src="img/icon_up.png" />
+			</div>
+		</div>
+		<div class="page page-5-1 hide">
+			<div class="wrap">
+				<img class="img-5-1 pt-page-moveFromBottomFade" src="img/g-h-text5.png" />
+				<img class="img_6 pt-page-moveIconUp" src="img/icon_up.png" />
+			</div>
+		</div>
+		<div class="page page-6-1 hide">
+			<img class="img-6-1 pt-page-moveFromTopFade" src="img/g-h-text6.png" />
+			<a href="http://cdnm.lqxshop.com/goods-tc0000285000000.html"><img class="img-6-2 pt-page-moveCircle" src="img/g-h-text6-1.png" /></a>
+		</div>
+    </div>
+	<div class="u-globalAudio">
+		<a href="javascript:void(0);">
+			<i class="icon-music"></i>
+			<audio src="img/time.mp3" autoplay="autoplay" loop="loop"></audio>
+		</a>
+    </div>
+	<!--
+	<div id="audiocontainer"></div>
+	<div id="textsuper">
+	<div id="textsub"><img id="fontimg" />
+    </div></div>
+	
+    <div id="share" onClick="closeDialog()">
+    	<div class="shareImg"></div>
+    </div>		
+	-->
+<style type="text/css">
+@-webkit-keyframes rotation {
+	10% { transform: rotate(90deg); -webkit-transform: rotate(90deg) }
+	50%, 60% { transform: rotate(0deg); -webkit-transform: rotate(0deg) }
+	90% { transform: rotate(90deg); -webkit-transform: rotate(90deg) }
+	100% { transform: rotate(90deg); -webkit-transform: rotate(90deg) }
+}
+@keyframes rotation {
+	10% { transform: rotate(90deg); -webkit-transform: rotate(90deg) }
+	50%, 60% { transform: rotate(0deg); -webkit-transform: rotate(0deg) }
+	90% { transform: rotate(90deg); -webkit-transform: rotate(90deg) }
+	100% { transform: rotate(90deg); -webkit-transform: rotate(90deg) }
+}
+#orientLayer { display: none; }
+@media screen and (min-aspect-ratio: 13/9) { #orientLayer { display: block; } }
+.mod-orient-layer { display: none; position: fixed; height: 100%; width: 100%; left: 0; top: 0; right: 0; bottom: 0; background: #000; z-index: 9997 }
+.mod-orient-layer__content { position: absolute; width: 100%; top: 45%; margin-top: -75px; text-align: center }
+.mod-orient-layer__icon-orient {background-image: url('img/phone.png');display: inline-block; width: 67px; height: 109px;
+	transform: rotate(90deg); -webkit-transform: rotate(90deg); -webkit-animation: rotation infinite 1.5s ease-in-out; animation: rotation infinite 1.5s ease-in-out; -webkit-background-size: 67px; background-size: 67px }
+.mod-orient-layer__desc { margin-top: 20px; font-size: 15px; color: #fff }
+</style>
+<!--DOM在CSS后避免reflow-->
+<div id="orientLayer" class="mod-orient-layer">
+  <div class="mod-orient-layer__content"> <i class="icon mod-orient-layer__icon-orient"></i>
+    <div class="mod-orient-layer__desc">为了更好的体验，请使用竖屏浏览</div>
+  </div>
+</div>
+	<script src="js/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="/2014/js/weixin.js"></script>
+	<script type="text/javascript">
+		var title = '“姜”爱带回家',
+		desc = '陪伴，是最长情的告白！爱父母，可以如此简单。',
+		link = window.location.href,
+		imgUrl = '/html/gohome/img/wgohome.jpg';
+		jsapi(title,desc,link,imgUrl);
+		if(link.indexOf("bastaff_no=") !== -1){
+			var baNum = link.split('=')[1].split('&')[0];
+			$('.page-6-1').find('a').attr('href',"/bamarketing/index/landing?no="+ baNum +"&sn=tc0000354000000");
+		}
+	</script>
+
+	<script src="js/sea.js"></script>
+	<script type="text/javascript"> seajs.use('page/main'); </script>
+	<!--
+    <script type="text/javascript">
+		document.onreadystatechange = loading; 
+		function loading(){
+			if(document.readyState == "complete")
+			{ 
+				$("#loading").hide();
+				$("#content").show();
+			}
+		}
+	</script>
+	-->
+	</body>
+</html>
