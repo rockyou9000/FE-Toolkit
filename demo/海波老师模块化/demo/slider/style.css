@@ -1,9 +1,12 @@
 html,body{
   height: 100%;
   width: 100%;
-  padding: 0;
-  margin: 0;
 }
+*{
+  margin:0;
+  padding:0;
+}
+
 .m-slider{
   background-color: #fff;
   position: relative;
@@ -13,10 +16,12 @@ html,body{
   transition-duration: 1s;
   transition-timing-function: ease-out;
 }
+
 .m-slider, .m-slider .slide{
   height: 100%;
   width: 100%;
 }
+
 .m-slider .slide{
   position: absolute;
   top:0;
@@ -24,7 +29,6 @@ html,body{
   text-align: center;
   vertical-align: middle;
   background-color: #fff;
-
 }
 
 .m-slider .slide.z-active{

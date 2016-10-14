@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<!-- 引入 ECharts 文件 -->
+	<script src="lib/echarts.js"></script>
+</head>
+<body>
+	<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+	<div id="main" style="width:600px;height:400px;"></div>
+</body>
+<script>
+	//初始化echarts
+	var mychart = echarts.init(document.getElementById('main'))
+
+	// 指定图表的配置项和数据
+	var option = {
+		title:{
+			text:'Echarts示例'
+		},
+		roseType: 'angle', //南丁格尔样式
+		itemStyle: {  //通用样式配置
+		    normal: {
+		         // 设置扇形的颜色
+		        color: '#c23531',
+		        shadowBlur: 200,
+		        shadowColor: 'rgba(0, 0, 0, 0.5)'
+		    },
+		     emphasis: {
+		        shadowBlur: 200,
+		        shadowColor: 'rgba(0, 0, 0, 0.5)'
+		    }
+		},
+		backgroundColor: '#2c343c',
+		textStyle: {
+	        color: 'rgba(255, 255, 255, 0.3)'
+	    },
+		tooltip:{},
+		series:[{
+            name: '访问来源',
+            type: 'pie',
+            radius: '80%',
+            itemStyle: {
+		        normal: {
+		            color: '#c23531'
+		        }
+		    },
+            data:[
+                {value:400, name:'搜索引擎'},
+                {value:335, name:'直接访问'},
+                {value:310, name:'邮件营销'},
+                {value:274, name:'联盟广告'},
+                {value:235, name:'视频广告'}
+            ]
+        }
+		],
+		visualMap: {
+		    // 不显示 visualMap 组件，只用于明暗度的映射
+		    show: false,
+		    // 映射的最小值为 80
+		    min: 80,
+		    // 映射的最大值为 600
+		    max: 600,
+		    inRange: {
+		        // 明暗度的范围是 0 到 1
+		        colorLightness: [0, 1]
+		    }
+		}
+	}
+	mychart.setOption(option);
+</script>
+</html>

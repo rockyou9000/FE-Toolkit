@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Carousel</title>
+	<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="yes" name="apple-touch-fullscreen">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body style="overflow: hidden;">
+	<div id="carousel">
+		<!-- 模板已经移至main.js -->
+
+		<!-- <div class="m-slider">
+			<div class="slide"></div>
+			<div class="slide"></div>
+			<div class="slide"></div>
+		</div> -->
+
+		<ul class="m-cursor">
+		  <li class='prev'><</li>
+		  <li class='cursor'>1</li>
+		  <li class='cursor z-active'>2</li>
+		  <li class='cursor'>3</li>
+		  <li class='cursor'>4</li>
+		  <li class='next'>></li>
+		</ul>
+
+	</div>
+</body>
+<script src="js/util.js"></script>
+<script src="js/main.js"></script>
+<script>
+	
+
+	//(关键)初始化轮播组件
+	var slide = new Slider ({
+		//目标容器
+		container:document.getElementById('carousel'),
+
+		//轮播内容路径
+		contents:[
+			'images/01.jpg',
+			'images/02.jpg',
+			'images/03.jpg',
+			'images/04.jpg',
+		],
+
+		//默认初始显示图片索引值 0为第一个
+		pageIndex:1,
+
+		//自动轮播时间,默认为不自动轮播
+		autoPlay:3000,
+
+		//是否支持拖拽
+		drag:true
+
+	});
+
+	//定义$选择函数
+	var $ = function(selector){
+		return [].slice.call(document.querySelectorAll(selector));
+	}
+
+	var cursors = $('.m-cursor .cursor'),
+		prev = $('.m-cursor .prev')[0],
+		next = $('.m-cursor .next')[0];
+
+	//为轮播导航栏绑定点击事件
+	cursors.forEach(function(cursor,index){
+		cursor.addEventListener('click',function(e){
+			slide.nav(index)
+		})
+	})
+
+	prev.addEventListener('click',function(e){
+		slide.prev()
+	})
+
+	next.addEventListener('click',function(e){
+		slide.next()
+	})
+
+	//添加轮播导航栏的效果
+	slide.on('nav',function(evt){
+		var pageIndex = evt.pageIndex;
+
+		cursors.forEach(function(cursor, index){
+
+		    if(index === pageIndex ){
+
+		      cursor.className = 'z-active';
+
+		    }else{
+
+		      cursor.className = '';
+		    
+		    }
+
+	  })
+
+	})
+	
+</script>
+</html>

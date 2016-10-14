@@ -67,7 +67,7 @@
     
   }
 
-  _.extend( Slider.prototype, _.emitter );
+  _.extend( Slider.prototype, _.emitter);
 
   _.extend( Slider.prototype, {
 

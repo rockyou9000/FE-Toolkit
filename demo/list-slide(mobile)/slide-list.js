@@ -7,7 +7,8 @@
 		//用户配置
 		options = options || {};
 		this.container = document.body.querySelectorAll('.slide_container')[0];
-		_.removeClass(this.container,'slide_container');
+		_.removeClass(this.container,'slide_container'); //移除class,保证支持多次实例化
+		
 		this.list = this.container.querySelectorAll('.slide_list_li');
 		this.btn = options.btn;
 		this.color = options.color || ['#FFF'];
