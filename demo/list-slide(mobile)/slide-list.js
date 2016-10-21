@@ -96,6 +96,7 @@
 	    _dragstart:function(event){
 	    	var touch = event.touches[0];//选择第一个触摸点
 	    	this.touch_start = parseInt(touch.clientX);
+	    	this.touch_end = parseInt(touch.clientX);
 	    	this.d_target = event.currentTarget.querySelector('.slide_list_text');
 	    	this.d_target_btn = event.currentTarget.querySelector('.slide_list_btn_'+this.style);
 	    },
@@ -130,9 +131,9 @@
 	    //touch事件结束回调
 	    _dragend:function(event){
 	    	var endX = this.touch_end - this.touch_start;
-
 	    	if(this.style =="left" && endX<=0 && this.d_target_btn.dataset.status == 0 )return;
 		    if(this.style =="right" && endX>=0 && this.d_target_btn.dataset.status == 0 )return;
+		    if(Math.abs(endX)<10) return;
 
 	    		if(Math.abs(endX) >= this.btn_all_width){ //当滑动距离超出按钮露出距离时,松开后按钮停留在界面中,否则按钮隐藏到界面外
 		    		if(endX>0 && this.d_target_btn.dataset.status == 0){

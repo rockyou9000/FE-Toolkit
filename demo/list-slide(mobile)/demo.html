@@ -8,6 +8,7 @@
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
     <meta content="telephone=no" name="format-detection">
     <meta content="email=no" name="format-detection">
+    <!-- <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script> -->
 	<title>Demo</title>
 	<link rel="stylesheet" type="text/css" href="slide-list.css">
 	<style>
@@ -44,10 +45,11 @@
 			//2.滑动方式
 			  style:'left', //目前仅支持左滑和右滑
 		})
-
+		slide_list.btn_value = 3;
 		//配置按钮点击回调函数
-		slide_list.on('btn1',function(){
-			alert('点击btn1')
+		
+		slide_list.on('btn1',function(e){
+			alert(this.btn_value)
 		})
 
 		slide_list.on('btn2',function(){
@@ -68,7 +70,7 @@
 
 		//配置按钮点击回调函数
 		slide_list2.on('btn1',function(){
-			alert('点击btn1xxx')
+			
 		})
 
 		slide_list2.on('btn2',function(){
