@@ -1,6 +1,6 @@
 ;(function(_){
 
-	var sl_debugger = true; //调试模式
+	var sl_debugger = false; //调试模式
 
 	//滑动构造函数
 	function Slide_list(options){
@@ -95,68 +95,122 @@
 	    //touch事件开始回调
 	    _dragstart:function(event){
 	    	var touch = event.touches[0];//选择第一个触摸点
-	    	this.touch_start = parseInt(touch.clientX);
-	    	this.touch_end = parseInt(touch.clientX);
-	    	this.d_target = event.currentTarget.querySelector('.slide_list_text');
-	    	this.d_target_btn = event.currentTarget.querySelector('.slide_list_btn_'+this.style);
+	    	// debugger;
+	    	
+	    	this.status_x = ""; //初始化 滑动方向判断(垂直还是水平)
+	    	this.status_y = ""; //初始化 滑动方向判断(垂直还是水平)
+	    	
+	    	this.touch_start_x = touch.clientX; //初始X坐标
+	    	this.touch_start_y = touch.clientY; //初始Y坐标
+
+	    	this.d_target = event.currentTarget.querySelector('.slide_list_text'); //获取滑动文字对象
+	    	this.d_target_btn = event.currentTarget.querySelector('.slide_list_btn_'+this.style); //获取滑动按钮对象
+
+	    	this.d_target.style.transitionDuration = '0s';
+	    	this.d_target_btn.style.transitionDuration = '0s';
 	    },
 	    //touch事件移动回调
 	    _dragmove:function(event){
-	    	event.preventDefault(); // 必须有,否则会有奇怪的不明移动
-	    	if(this.d_target && this.d_target_btn){
+	    	if(this.status_x == true) event.preventDefault();  // 判断水平方向滑动时,取消上下滑动
+	    	if(this.status_y == true) return; // 判断竖直方向滑动时,取消按钮滑动
+
+	    	if(this.d_target && this.d_target_btn){ //判断文字对象和按钮对象都存在
 	    		var touch = event.touches[0];
-		    	this.touch_end = parseInt(touch.clientX);
-		    	var moveX = this.touch_end - this.touch_start;
-		    	if(sl_debugger)console.log(moveX)
+	    		// debugger;
+		    	this.touch_end_x = touch.clientX; //结束X坐标
+		    	this.touch_end_y = touch.clientY; //结束Y坐标
+
+		    	var moveX = this.touch_end_x - this.touch_start_x; //计算X方向移动的数值
+	    		var moveY = this.touch_end_y - this.touch_start_y; //计算Y方向移动的数值
+
+	    		if(this.status_x == '' && this.status_y == ''){ //如果未进行滑动方向判断
+	    			if(Math.abs(moveY)>Math.abs(moveX)) {
+		    			this.status_y = true;
+		    			return;
+	    			}else{
+	    				this.status_x = true;
+	    			}
+	    		}
+	    		
 
 		    	//根据style配置 锁定其他滑动方向
-		    	if(this.style =="left" && moveX<0 &&this.d_target_btn.dataset.status == 0 )return; 
-		    	if(this.style =="right" && moveX>0 && this.d_target_btn.dataset.status == 0 )return;
+		    	if(this.style =="left" && moveX<0 &&this.d_target_btn.dataset.status == 0 ){
+		    		this.d_target.style.transform = 'translate3d(0,0,0)';
+		    		this.d_target_btn.style.transform = 'translate3d(0,0,0)';
+		    		return;
+		    	}
+		    	if(this.style =="right" && moveX>0 && this.d_target_btn.dataset.status == 0 ){
+		    		this.d_target.style.transform = 'translate3d(0,0,0)';
+		    		this.d_target_btn.style.transform = 'translate3d(0,0,0)';
+		    		return;
+		    	}
 
-		    	if(Math.abs(moveX) < this.btn_all_width){
-		    		this.d_target.style.transform = 'translate3d('+moveX+'px,0,0)';
-		    		this.d_target_btn.style.transform = 'translate3d('+moveX+'px,0,0)';
-		    	}else{
-		    		var remainX = moveX > 0 ?(moveX - this.btn_all_width)*0.2:(moveX + this.btn_all_width)*0.2;
-		    		if(moveX>0){
-		    			this.d_target.style.transform = 'translate3d('+(this.btn_all_width + remainX)+'px,0,0)';
-		    			this.d_target_btn.style.transform = 'translate3d('+(this.btn_all_width + remainX)+'px,0,0)';
+		    	if(this.d_target_btn.dataset.status == 0){//判断滑动状态 0为初始状态 1为按钮显示状态
+		    		if(Math.abs(moveX) < this.btn_all_width){
+			    		this.d_target.style.transform = 'translate3d('+moveX+'px,0,0)';
+			    		this.d_target_btn.style.transform = 'translate3d('+moveX+'px,0,0)';
+			    	}else{
+			    		var remainX = moveX > 0 ?(moveX - this.btn_all_width)*0.2:(moveX + this.btn_all_width)*0.2;
+			    		if(moveX>0){
+			    			this.d_target.style.transform = 'translate3d('+(this.btn_all_width + remainX)+'px,0,0)';
+			    			this.d_target_btn.style.transform = 'translate3d('+(this.btn_all_width + remainX)+'px,0,0)';
+			    		}else{
+			    			this.d_target.style.transform = 'translate3d('+(-this.btn_all_width + remainX)+'px,0,0)';
+			    			this.d_target_btn.style.transform = 'translate3d('+(-this.btn_all_width + remainX)+'px,0,0)';
+			    		}
+			    	}
+		    	}else if(this.d_target_btn.dataset.status == 1){
+		    		if(this.style == "left"){
+		    			// debugger;
+			    		this.d_target.style.transform = 'translate3d('+(this.btn_all_width+moveX*0.2)+'px,0,0)';
+			    		this.d_target_btn.style.transform = 'translate3d('+(this.btn_all_width+moveX*0.2)+'px,0,0)';
 		    		}else{
-		    			this.d_target.style.transform = 'translate3d('+(-this.btn_all_width + remainX)+'px,0,0)';
-		    			this.d_target_btn.style.transform = 'translate3d('+(-this.btn_all_width + remainX)+'px,0,0)';
+		    			// debugger;
+			    		this.d_target.style.transform = 'translate3d('+(-this.btn_all_width+moveX*0.2)+'px,0,0)';
+			    		this.d_target_btn.style.transform = 'translate3d('+(-this.btn_all_width+moveX*0.2)+'px,0,0)';
 		    		}
+		    		
 		    	}
 	    	}
 	    },
 	    //touch事件结束回调
 	    _dragend:function(event){
-	    	var endX = this.touch_end - this.touch_start;
-	    	if(this.style =="left" && endX<=0 && this.d_target_btn.dataset.status == 0 )return;
-		    if(this.style =="right" && endX>=0 && this.d_target_btn.dataset.status == 0 )return;
-		    if(Math.abs(endX)<10) return;
+	    	var endX = this.touch_end_x - this.touch_start_x;
+	    	//根据style配置 锁定其他滑动方向
+	    	if(this.style =="left" && endX<=0 && this.d_target_btn.dataset.status == 0 ) return;
+		    if(this.style =="right" && endX>=0 && this.d_target_btn.dataset.status == 0 ) return;
 
-	    		if(Math.abs(endX) >= this.btn_all_width){ //当滑动距离超出按钮露出距离时,松开后按钮停留在界面中,否则按钮隐藏到界面外
+		    this.d_target.style.transitionDuration = '0.5s';
+			this.d_target_btn.style.transitionDuration = '0.5s';
+
+			if(this.status_x == true){
+				if(Math.abs(endX) >= this.btn_all_width){ //当滑动距离超出按钮露出距离时,松开后按钮停留在界面中,否则按钮隐藏到界面外
 		    		if(endX>0 && this.d_target_btn.dataset.status == 0){
 			    		this.d_target.style.transform = 'translate3d('+this.btn_all_width+'px,0,0)';
 			    		this.d_target_btn.style.transform = 'translate3d('+this.btn_all_width+'px,0,0)';
-			    		this.d_target_btn.dataset.status = '1';
+			    		this.d_target_btn.dataset.status = 1;
 			    		
 		    		}else if(endX<0 && this.d_target_btn.dataset.status == 0){
 		    			this.d_target.style.transform = 'translate3d(-'+this.btn_all_width+'px,0,0)';
 		    			this.d_target_btn.style.transform = 'translate3d(-'+this.btn_all_width+'px,0,0)';
-			    		this.d_target_btn.dataset.status = '1';
+			    		this.d_target_btn.dataset.status = 1;
 			    		
 		    		}else{
 			    		this.d_target.style.transform = 'translate3d(0,0,0)';
 			    		this.d_target_btn.style.transform = 'translate3d(0,0,0)';
-			    		this.d_target_btn.dataset.status = '0';	
+			    		this.d_target_btn.dataset.status = 0;	
 		    	}
 		    	}else{
 		    		this.d_target.style.transform = 'translate3d(0,0,0)';
 		    		this.d_target_btn.style.transform = 'translate3d(0,0,0)';
-		    		this.d_target_btn.dataset.status = '0';
+		    		this.d_target_btn.dataset.status = 0;
 		    	}
-	    }
+			}else if(this.status_y == true){
+	    		this.d_target.style.transform = 'translate3d(0,0,0)';
+	    		this.d_target_btn.style.transform = 'translate3d(0,0,0)';
+	    		this.d_target_btn.dataset.status = 0;
+	    	}
+		}
 	})
 
 	window.Slide_list = Slide_list; // 把构造函数Slide_list升级为全局变量
