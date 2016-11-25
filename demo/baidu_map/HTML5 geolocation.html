@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>html5 geolocation</title>
+</head>
+<body>
+	<div>
+		本地需要打开vpn测试
+		如果用百度地图,可以使用百度地图封装的geoloacation函数
+	</div>
+	<script>
+
+		var options = {
+		  enableHighAccuracy: true, //高精度 默认为false
+		  timeout: 10000000, //最大时间
+		  maximumAge: 0 // 坐标缓存时间 默认为0 
+		};
+
+		//成功回调函数
+		function success(pos) {
+			console.dir(pos)
+		  var crd = pos.coords;
+
+		  console.log('Your current position is:');
+		  console.log('Latitude : ' + crd.latitude);
+		  console.log('Longitude: ' + crd.longitude);
+		  console.log('More or less ' + crd.accuracy + ' meters.');
+		};
+		//失败回调函数
+		function error(err) {
+		  console.warn('ERROR(' + err.code + '): ' + err.message);
+		};
+
+		setTimeout(navigator.geolocation.getCurrentPosition(success, error, options),1000)
+		
+
+	</script>
+</body>
+</html>

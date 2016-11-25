@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="http://api.map.baidu.com/api?v=2.0&ak=wHQMaolOuj639NGp0uLYrlAa" type="text/javascript"></script>
+	<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+		html{
+			height:100%;
+		}
+		body{
+			height:100%;
+			margin:0;
+			padding:0;
+		}
+		a{
+			text-decoration: none;
+		}
+
+		/* 弹出框 */
+		#l_modal{
+			display:block;
+			position:absolute;
+			width:100%;
+			height:100%;
+			top:0;
+			left:0;
+			z-index: 11;
+			text-align: center;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+		}
+		#l_modal .inner{
+			display: inline-block;
+			width:800px;
+			height:500px;
+			margin:0 auto;
+			background: #ccc;
+			vertical-align: middle;
+			text-align: left;
+		}
+		#l_modal .vertical_line{
+			display: inline-block;
+			height:100%;
+			width:1px;
+			vertical-align: middle;
+		}
+
+		.modal_head{
+			background:#666;
+			width:100%; 
+			height:30px;
+		}
+		.modal_head .head_text{
+			margin-left:10px;
+			line-height: 30px;
+			font-size:16px;
+		}
+		.modal_head .hide{
+			float:right;
+			margin-right:10px;
+			line-height:30px;
+			cursor:pointer;
+		}
+		.modal_label{
+			margin:0;
+			text-align: center;
+			height:30px;
+		}
+		.modal_label span ,.modal_label select{
+			line-height: 30px;
+			vertical-align: middle;
+		}
+		.modal_label select{
+			width:80px;
+		}
+		.modal_label button{
+			width:80px;
+			height:20px;
+			vertical-align: middle;
+			border-radius: 5px;
+			-webkit-border-radius: 5px;
+			border:0;
+			background: #fff
+		}
+
+		.storeList{
+			width:300px;
+			height:440px;
+			float:left;
+		}
+
+		.store_result{
+			background: #fff;
+			padding:20px 0;
+		}
+		.store_result p{
+			height:30px;
+			text-align: center;
+		}
+		.store_result .confirm_btn{
+		    display: block;
+		    margin: 0 auto;
+		    width: 80px;
+		    height: 30px;
+		    border: 0;
+		    background: #888;
+		    border-radius: 5px;
+		    -webkit-border-radius: 5px;
+		    cursor:pointer;
+		}
+
+		.storeList ul{
+			height:310px;
+			overflow: auto;	
+		}
+		.storeList li{
+			list-style:none;
+			font-size:12px;
+			padding-left:10px;
+		}
+		.storeList li:hover{
+			background-color:#666;
+		}
+		.storeList li span{
+			display:block;
+		}
+		.storeList a{
+			color:#222;
+		}
+
+		/* 百度地图 */
+		#l-map{
+			width:500px;
+			height:440px;
+		}
+		.anchorBL{  
+	       display:none;  
+	   } 
+
+		/* 滚动条样式 */
+		::-webkit-scrollbar {
+		  width: 8px;
+		  height: 8px;
+		  background-color: rgba(0,0,0,.6);
+		}
+		
+		::-webkit-scrollbar-thumb {
+		  border-radius: 10px;
+		  border:1px solid #888;
+		  background-color: rgba(255,255,255,0.5);
+		}
+		/* ::-webkit-scrollbar-track {
+		  border-radius: 10px;
+		  background-color: rgba(0,153,77,.2);
+		  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0);
+		}
+		::-webkit-scrollbar-track:hover {
+		  background-color: rgba(0,153,77,.3);
+		  -webkit-box-shadow: inset 0 0 6px rgba(0,153,153,.4);
+		}
+		::-webkit-scrollbar-track:active {
+		  background-color: rgba(0,153,77,.5);
+		  -webkit-box-shadow: inset 0 0 6px rgba(0,153,153,.1);
+		} */
+	</style>
+</head>
+<body>
+	<button class="show">点击弹出</button>
+
+	<div id="l_modal">
+		<div class="vertical_line"></div>
+		<div class="inner">
+			<div class="modal_head"><span class="head_text">选择门店</span><span class="hide">X</span></div>
+			<p class="modal_label">
+				<span>查找门店</span>
+				<select name="shop_location" id="shop_location">
+					<option value="上海">上海</option>
+					<option value="北京">北京</option>
+				</select>
+				<button class="shop_search">搜索</button>
+			</p>
+			<div class="searchResult">
+		    	<div class="storeList" id="r-result">
+		    		<div class="store_result">
+		    			<p>查找结果</p>
+		    			<p>找到<span class="shop_num">0</span>家门店</p>
+		    			<button class="confirm_btn">确定</button>
+		    		</div>
+		    		<ul></ul>
+		    	</div>
+		        <div id="l-map" class="mapShow" ></div>
+		        <script>
+                    var markerArr= [];
+
+		        	function init(city){
+		        		//add by yepeng on 20161124  创建地图实例
+		        		var map = new BMap.Map("l-map");
+
+						// var point = new BMap.Point(116.404, 39.915);  // 创建点坐标 
+						map.centerAndZoom(city, 13);       // 初始化地图，设置中心点坐标和地图级别
+						map.setCurrentCity(city);          // 设置地图显示的城市 此项是必须设置的
+						map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+
+						//add by yepeng on 20161124 添加地图控件
+						map.addControl(new BMap.NavigationControl());    
+						map.addControl(new BMap.ScaleControl());    
+						map.addControl(new BMap.OverviewMapControl());    
+						map.addControl(new BMap.MapTypeControl());
+
+						window.map = map;//将map变量存储在全局
+		        	}
+
+                    //创建位置点
+                    function addMarker(point, index){
+                        var myIcon = new BMap.Icon("http://api.map.baidu.com/img/markers.png",
+                                    new BMap.Size(23, 25), {
+                            offset: new BMap.Size(10, 25),
+                            imageOffset: new BMap.Size(0, 0 - 11 * 25)
+                        });
+                        var marker = new BMap.Marker(point, {icon: myIcon});
+                        map.addOverlay(marker);
+                        return marker;
+                    }
+
+                    //创建InfoWindow
+                    function addInfoWindow(marker,index,thistitle,thiscomment,thistel){
+                        var maxLen = markerArr.length;
+                        var name = "地址：";
+                        var tel = "电话：";
+
+                        // infowindow的标题
+                        var infoWindowTitle = '<div class="showStoreInfo"><h3>'+thistitle+'</h3></div>';
+                        // infowindow的显示信息
+                        var infoWindowHtml = [];
+                        infoWindowHtml.push('<div class="showStoreCon"><ul>');
+                        infoWindowHtml.push('<li>');
+                        infoWindowHtml.push('<span>'+ name + thiscomment + '</span>');
+                        infoWindowHtml.push('<span>'+ tel + thistel + '</span>');
+                        infoWindowHtml.push('</li>');
+                        infoWindowHtml.push('<li>');
+                        infoWindowHtml.push('<span>在此门店，你可以找到</span>');
+                        infoWindowHtml.push('<span class="graycor">手工皂、面部护理品、眼唇护理品、手足护理品、身体护理品、秀发护理品等······</span>');
+                        infoWindowHtml.push('</li>');
+                        infoWindowHtml.push('<li>');
+                        infoWindowHtml.push('<span>退货规定</span>');
+                        infoWindowHtml.push('<span class="graycor">我们乐意在购买后的30日内，为您退款或退换任何不合适的货品。</span>');
+                        infoWindowHtml.push('</li>');
+                        infoWindowHtml.push('</ul></div>');
+
+                        var infoWindow = new BMap.InfoWindow(infoWindowHtml.join(""),{title:infoWindowTitle,width:300});
+                        var openInfoWinFun = function(){
+                            marker.openInfoWindow(infoWindow);
+                            for(var cnt = 0; cnt < maxLen; cnt++){
+                                if(!document.getElementById("list" + cnt)){continue;}
+                                if(cnt == index){
+                                    document.getElementById("list" + cnt).style.backgroundColor = "#cccccc";
+                                }else{
+                                    document.getElementById("list" + cnt).style.backgroundColor = "#fff";
+                                }
+                            }
+                        };
+                        marker.addEventListener("click", openInfoWinFun);
+                        return openInfoWinFun;
+                    }
+
+                    //搜索回调函数
+                    function search_success (data){
+                        //console.log(data);
+
+                        var length = data.length;
+                        window.markerArr = data;
+                        $('.shop_num').text(length);//修改搜索结果数
+
+                        //获取搜索城市名称
+                        var city = $('#shop_location').val();
+                        //重置地图
+                        init(city);
+
+                        openInfoWinFuns = [];
+                        $('.storeList ul').text('');
+
+                        //add by yepeng on 2016124 循环添加门店坐标到地图上,添加搜索结果到list中
+                        for(var i = 0;i<data.length;i++){
+                            var item = data[i];
+                            var p0 = item.point.split("|")[0];
+                            var p1 = item.point.split("|")[1];
+
+                            //新建baidumap 位置点
+                            var point = new BMap.Point(p0,p1);
+                            var marker = addMarker(point,i);
+
+                            //增加位置点的信息框
+                            var openInfoWinFun = addInfoWindow(marker,i,item.title,item.content,item.tel);
+                            openInfoWinFuns.push(openInfoWinFun);
+
+                            //搜索结果list
+                            var template = '<li id="list'+i+'" onclick="openInfoWinFuns['+ i + ']()">';
+                            template += '<a href="#">';
+                            template += '<span>'+item.title+'</span>';
+                            template += '<span>'+item.content+'</span>';
+                            template += '<span>'+item.tel+'</span>';
+                            template += '</a>';
+                            template += '</li>';
+
+                            $('.storeList ul').append(template);
+
+                        }
+                    }
+
+                    //初始化地图应用
+                    init('上海');
+		        </script>
+		    </div>
+		</div>
+	</div>
+	<script>
+
+        //获取初始数据
+        $.ajax({
+            url:'./data.json',
+            type:'get',
+            dataType:'json',
+            success:function(data){
+                search_success(data);
+            }
+        });
+
+		var p1 = document.querySelector('.show');
+		var p2 = document.querySelector('.hide');
+		var p3 = document.querySelector('#l_modal');
+		var p4 = document.querySelector('.shop_search');
+
+		p1.addEventListener('click',show,false);
+		p2.addEventListener('click',hide,false);
+		p4.addEventListener('click',shop_search,false);
+
+		function show(){
+			p3.style.display = 'block';
+		}
+
+		function hide(){
+			p3.style.display = 'none';
+		}
+
+		function shop_search(){
+            $.ajax({
+                url:'./data2.json',
+                type:'get',
+                dataType:'json',
+                success:function(data){
+                    search_success(data);
+                }
+            });
+        }
+	</script>
+</body>
+</html>
