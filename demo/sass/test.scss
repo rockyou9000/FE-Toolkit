@@ -1,0 +1,66 @@
+//sss
+
+/*!
+sss
+*/
+
+$blue: #333333;
+$side: left;
+$var:20px;
+@mixin left {
+    float: left;
+    margin: 10px;
+    display: block;
+}
+
+@mixin right ($value:15px) {
+    float: right;
+    margin: $value;
+    display: block;
+}
+
+@mixin rounded($vert, $horz, $radius: 10px) {
+    border-#{$vert}-#{$horz}-radius: $radius;
+    -moz-border-#{$vert}-#{$horz}-radius: $radius;
+    -webkit-border-#{$vert}-#{$horz}-radius: $radius;
+}
+
+html {
+    color: $blue;
+    border-#{$side}: 5px;
+}
+
+body {
+    margin: (15px/2);
+    top: 30px + 20px;
+    left: 20px-10px;
+    right: 20px*10;
+}
+
+div {
+    border: 1px solid blue;
+    a {
+        color: red;
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}
+
+.class1 {
+    border: 1px solid black;
+}
+
+.class2 {
+    @extend .class1;
+    font-size: $var;
+}
+
+p {
+    @include left;
+}
+
+span {
+    @include right(50px);
+    @include rounded(left, top, 10px)
+}

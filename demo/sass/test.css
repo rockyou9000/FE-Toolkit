@@ -1,0 +1,40 @@
+/*!
+sss
+*/
+html {
+  color: #333333;
+  border-left: 5px; }
+
+body {
+  margin: 7.5px;
+  top: 50px;
+  left: 10px;
+  right: 200px; }
+
+div {
+  border: 1px solid blue; }
+  div a {
+    color: red; }
+    div a:hover {
+      text-decoration: none; }
+
+.class1, .class2 {
+  border: 1px solid black; }
+
+.class2 {
+  font-size: 20px; }
+
+p {
+  float: left;
+  margin: 10px;
+  display: block; }
+
+span {
+  float: right;
+  margin: 50px;
+  display: block;
+  border-left-top-radius: 10px;
+  -moz-border-left-top-radius: 10px;
+  -webkit-border-left-top-radius: 10px; }
+
+/*# sourceMappingURL=test.css.map */
