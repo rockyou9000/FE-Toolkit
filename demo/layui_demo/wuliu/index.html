@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" href="css/layui.css" />
+		<script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+		<script src="js/layer.js" charset="utf-8"></script>
+		<script src="js/layer.main.js" charset="utf-8"></script>
+		<style>
+			body{font-size: 12px;}
+			ul li{list-style: none;}
+			.track-rcol{width: 900px; border: 1px solid #eee;}
+			.track-list{margin: 20px; padding-left: 5px; position: relative;}
+			.track-list li{position: relative; padding: 9px 0 0 25px; line-height: 18px; border-left: 1px solid #d9d9d9; color: #999;}
+			.track-list li.first{color: red; padding-top: 0; border-left-color: #fff;}
+			.track-list li .node-icon{position: absolute; left: -6px; top: 50%; width: 11px; height: 11px; background: url(http://demo.daimabiji.com/3531/img/order-icons.png)  -21px -72px no-repeat;}
+			.track-list li.first .node-icon{background-position:0 -72px;}
+			.track-list li .time{margin-right: 20px; position: relative; top: 4px; display: inline-block; vertical-align: middle;}
+			.track-list li .txt{max-width: 600px; position: relative; top: 4px; display: inline-block; vertical-align: middle;}
+			.track-list li.first .time{margin-right: 20px; }
+			.track-list li.first .txt{max-width: 600px; }
+		</style>
+	</head>
+	<body>
+		<div class="track-rcol">
+			<div class="track-list" id="view">
+				
+			</div>
+		</div>
+	</body>
+</html>
+
+<script id="demo" type="text/html">
+	{{#  if(d.length !== 0){ }}
+		<ul>
+			{{#  layui.each(d, function(index, item){ }}
+			<li {{# if(index === 0){ }}class="first" {{# } }}>
+				<i class="node-icon"></i>
+				<span class="time">{{item.time}}</span>
+				<span class="txt">{{item.context}}</span>
+			</li>
+			{{#  }); }}
+		</ul>
+	{{#  }else{ }} 
+		无物流数据
+	{{#  } }} 
+</script>
+
+
+<script>
+	$(function(){
+		$.support.cors = true;
+		var laywrite = layer.msg('加载中', {icon: 16, time: 20000});
+		$.ajax({
+			type: "GET",
+			url: "http://q.kdpt.net/api",
+			dataType: "jsonp",
+			jsonp: "callback",
+			jsonpCallback: "success_jsonpCallback", 
+			data: {id: 'XDB2gzsjbsssdqswapANo0I_353775367', nu: '16121422760923', com: 'auto', show:'json' },
+			beforeSend: function(){
+				
+			},
+			success: function (json) {
+			  //alert(json.message);//将url及参数输入浏览器地址栏，可以知道返回格式。
+			  var data = [];
+			  if(json.message == 'ok'){
+					data = json.data;
+			  }
+			  layui.use('laytpl', function(){
+					var laytpl = layui.laytpl;
+					var getTpl = demo.innerHTML;
+					laytpl(getTpl).render(data, function(html){
+					  view.innerHTML = html;
+					});
+				});
+				layer.close(laywrite);
+			  
+			},
+			error: function (XMLHttpRequest, textStatus, errorThrown) {
+			  alert(XMLHttpRequest.status);
+			  alert(XMLHttpRequest.readyState);
+			  alert(textStatus);
+			},
+			complete: function (XMLHttpRequest, textStatus) {
+			  this; 
+			}
+		});
+	});
+	
+	//layer.msg('加载中', {icon: 16});
+
+</script>
