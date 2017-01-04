@@ -1,0 +1,61 @@
+
+CORS:
+1.http://cis.sh-lei.cn/sign/test 
+	返回:{"code":0,"msg":"YE PENG SB"}
+
+JSONP:
+
+1. http://ip.taobao.com/service/getIpInfo.php?ip=63.223.108.42  
+	返回:{"code":1,"data":"ip info not found."}
+
+2.https://api.github.com/?callback=JSON_CALLBACK
+	返回:JSON_CALLBACK({
+  "meta": {
+    "Content-Type": "application/javascript; charset=utf-8",
+    "X-RateLimit-Limit": "60",
+    "X-RateLimit-Remaining": "59",
+    "X-RateLimit-Reset": "1483429511",
+    "Cache-Control": "public, max-age=60, s-maxage=60",
+    "Vary": "Accept",
+    "ETag": "\"b8d4e697a729301642c7dff63de7e358\"",
+    "X-GitHub-Media-Type": "github.v3; format=json",
+    "status": 200
+  },
+  "data": {
+    "current_user_url": "https://api.github.com/user",
+    "current_user_authorizations_html_url": "https://github.com/settings/connections/applications{/client_id}",
+    "authorizations_url": "https://api.github.com/authorizations",
+    "code_search_url": "https://api.github.com/search/code?q={query}{&page,per_page,sort,order}",
+    "commit_search_url": "https://api.github.com/search/commits?q={query}{&page,per_page,sort,order}",
+    "emails_url": "https://api.github.com/user/emails",
+    "emojis_url": "https://api.github.com/emojis",
+    "events_url": "https://api.github.com/events",
+    "feeds_url": "https://api.github.com/feeds",
+    "followers_url": "https://api.github.com/user/followers",
+    "following_url": "https://api.github.com/user/following{/target}",
+    "gists_url": "https://api.github.com/gists{/gist_id}",
+    "hub_url": "https://api.github.com/hub",
+    "issue_search_url": "https://api.github.com/search/issues?q={query}{&page,per_page,sort,order}",
+    "issues_url": "https://api.github.com/issues",
+    "keys_url": "https://api.github.com/user/keys",
+    "notifications_url": "https://api.github.com/notifications",
+    "organization_repositories_url": "https://api.github.com/orgs/{org}/repos{?type,page,per_page,sort}",
+    "organization_url": "https://api.github.com/orgs/{org}",
+    "public_gists_url": "https://api.github.com/gists/public",
+    "rate_limit_url": "https://api.github.com/rate_limit",
+    "repository_url": "https://api.github.com/repos/{owner}/{repo}",
+    "repository_search_url": "https://api.github.com/search/repositories?q={query}{&page,per_page,sort,order}",
+    "current_user_repositories_url": "https://api.github.com/user/repos{?type,page,per_page,sort}",
+    "starred_url": "https://api.github.com/user/starred{/owner}{/repo}",
+    "starred_gists_url": "https://api.github.com/gists/starred",
+    "team_url": "https://api.github.com/teams",
+    "user_url": "https://api.github.com/users/{user}",
+    "user_organizations_url": "https://api.github.com/user/orgs",
+    "user_repositories_url": "https://api.github.com/users/{user}/repos{?type,page,per_page,sort}",
+    "user_search_url": "https://api.github.com/search/users?q={query}{&page,per_page,sort,order}"
+  }
+})
+
+3.http://devadmin.lqxshop.com/?app_act=testmongodb/product_list&callback=JSON_CALLBACK
+	返回:JSON_CALLBACK({"code":0,"list":[{"goods_name":"\u7eff\u8336\u7ec6\u6ed1\u6c90\u6d74\u973255g","goods_sn":"C.C.B.02.24","sku_sn":"6942523301551"},{"goods_name":"\u7eff\u8336\u8f6f\u624b\u971c","goods_sn":"C.C.B.02.57","sku_sn":"6959382303794"}...
+
