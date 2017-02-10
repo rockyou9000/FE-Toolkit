@@ -1,0 +1,42 @@
+{
+  "name": "tiny-date-picker",
+  "version": "2.0.5",
+  "description": "A small, dependency-free date picker",
+  "main": "tiny-date-picker.js",
+  "scripts": {
+    "selenium": "concurrently \"java -jar selenium-server-standalone-3.0.1.jar\" \"npm start\"",
+    "start": "http-server . -c-1",
+    "test": "wdio test/wdio.mocha.conf.js",
+    "min": "concurrently \"npm run mincss\" \"npm run minjs\"",
+    "mincss": "uglifycss tiny-date-picker.css > tiny-date-picker.min.css && echo 'Minified CSS:' && cat tiny-date-picker.min.css | gzip -9f | wc -c",
+    "minjs": "uglifyjs tiny-date-picker.js --source-map tiny-date-picker.min.js.map -m -c -o tiny-date-picker.min.js && echo 'Minified JS:' && cat tiny-date-picker.min.js | gzip -9f | wc -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chrisdavies/tiny-date-picker.git"
+  },
+  "keywords": [
+    "date",
+    "picker",
+    "date",
+    "chooser",
+    "calendar"
+  ],
+  "author": "Chris Davies <ferociousturtle@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chrisdavies/tiny-date-picker/issues"
+  },
+  "homepage": "https://github.com/chrisdavies/tiny-date-picker#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "concurrently": "^3.1.0",
+    "http-server": "^0.9.0",
+    "mocha": "^3.2.0",
+    "uglify-js": "^2.7.5",
+    "uglifycss": "0.0.25",
+    "wdio-mocha-framework": "^0.5.4",
+    "wdio-spec-reporter": "0.0.3",
+    "webdriverio": "^4.4.0"
+  }
+}
